@@ -18,7 +18,7 @@ preferred-dark-theme = "navy"
 copy-fonts = true
 mathjax-support = false
 additional-css = []
-additional-js = []
+additional-js = ["mermaid-init.js"]
 no-section-label = true
 
 [output.html.search]

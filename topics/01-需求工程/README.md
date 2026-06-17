@@ -24,6 +24,17 @@
 | **L2: Spec-Anchored** | 规格锚定 | 规格随代码持续演进，成为功能的"活文档" |
 | **L3: Spec-as-Source** | 规格即源码 | 规格是唯一源码，人类只编辑规格，代码标记 `// GENERATED FROM SPEC - DO NOT EDIT` |
 
+```mermaid
+flowchart LR
+    A[📝 传统 PRD<br/>人类阅读<br/>模糊验收标准<br/>一次性文档] -->|AI 时代淘汰| B[📋 Spec-First<br/>编码前写规格<br/>任务完成后可丢弃]
+    B --> C[⚓ Spec-Anchored<br/>规格随代码演进<br/>成为"活文档"]
+    C --> D[🏗️ Spec-as-Source<br/>规格是唯一源码<br/>人类只编辑规格]
+    style A fill:#ffcccc
+    style B fill:#ffffcc
+    style C fill:#cce5ff
+    style D fill:#ccffcc
+```
+
 **SDD vs 传统 PRD 的根本差异**：
 
 | 维度 | 传统 PRD | SDD 规格 |

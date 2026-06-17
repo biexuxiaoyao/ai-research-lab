@@ -806,7 +806,7 @@ preferred-dark-theme = "navy"
 copy-fonts = true
 mathjax-support = false
 additional-css = []
-additional-js = []
+additional-js = ["mermaid-init.js"]
 no-section-label = true
 
 [output.html.search]
@@ -816,7 +816,25 @@ use-boolean-and = true
 [preprocessor]
 """, encoding="utf-8")
 
-    # 2. 生成 SUMMARY.md（从大纲树生成嵌套导航）
+    # 2. 生成 Mermaid 初始化脚本（放在 site/ 根目录，与 book.toml 同级）
+    (output_dir / "mermaid-init.js").write_text("""// Mermaid.js loader for mdBook
+(function () {
+  'use strict';
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+  script.onload = function () {
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      flowchart: { useMaxWidth: true, htmlLabels: true },
+    });
+  };
+  document.head.appendChild(script);
+})();
+""", encoding="utf-8")
+
+    # 3. 生成 SUMMARY.md（从大纲树生成嵌套导航）
     summary = generate_summary_md()
     (src_dir / "SUMMARY.md").write_text(summary, encoding="utf-8")
 
