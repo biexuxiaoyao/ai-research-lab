@@ -10,7 +10,7 @@
 
 ### 层级式（Hierarchical / Tree）
 
-```
+```text
 Planner/Orchestrator
     ├── Manager A (领域A)
     │   ├── Worker A1
@@ -123,7 +123,7 @@ Cognition的核心立场：
 
 Devin实质上是一个**单Agent系统+工具集成的子能力**，结构类似语义操作系统[8]：
 
-```
+```python
 while not task_finished:
     perception = env.observe()
     plan = llm.plan(perception)

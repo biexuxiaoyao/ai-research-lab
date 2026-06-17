@@ -13,10 +13,12 @@
   python assemble.py full <output.md>      # 全量装配（单文件输出，锚点链接）
   python assemble.py pdf-ready <output.md> # PDF 就绪文件（清除 HTML 注释，YAML 元数据）
   python assemble.py split [output_dir]    # 按 L1 拆分为 18 个独立文件（~30KB/文件）
-  python assemble.py site [output_dir]     # 生成 mdBook 文档站（侧边栏+搜索+主题）
+  python assemble.py site [output_dir]     # 生成 mdBook 文档站（自动检测 git remote + 构建验证）
   python assemble.py markmap [output.html] # 增强版 markmap（可点击节点+内容预览）
   python assemble.py pdf-help              # 打印 PDF 转换指南（中文 + 锚点）
   python assemble.py epub [output.epub]     # 生成 ePub 电子书（需要 Pandoc）
+  python assemble.py publish               # 🚀 一键发布（site + epub + pdf + split + markmap）
+  python assemble.py env-check             # 检查发布环境（Pandoc/mdBook/Git 是否就绪）
   python assemble.py status                # 扫描文件，输出大小/行数/健康度
   python assemble.py suggest-splits        # 识别超阈值文件，建议拆分方案
   python assemble.py index                 # 生成文件路径索引
@@ -43,8 +45,58 @@ ROOT = Path(__file__).parent
 OUTLINE_FILE = ROOT / "RESEARCH-OUTLINE.md"
 TOPICS_DIR = ROOT / "topics"
 REPORTS_DIR = ROOT / "reports"
-SPLIT_THRESHOLD = 500   # 文件行数阈值，超过建议拆分
-WARN_THRESHOLD = 300     # 警告阈值
+SPLIT_THRESHOLD = 1000  # 文件行数阈值，超过建议拆分
+WARN_THRESHOLD = 600     # 警告阈值
+
+# CDN 资源版本（便于统一升级）
+MERMAID_CDN = "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"
+MARKMAP_CDN = "https://cdn.jsdelivr.net/npm/markmap-autoloader@0.17"
+MARKMAP_VIEW_CDN = "https://cdn.jsdelivr.net/npm/markmap-view@0.17"
+MARKMAP_LIB_CDN = "https://cdn.jsdelivr.net/npm/markmap-lib@0.17/dist/browser/index.min.js"
+
+
+# ============================================================
+# 通用工具函数
+# ============================================================
+
+def _log(msg, level="INFO"):
+    """统一日志输出。level: INFO | WARN | ERROR | OK"""
+    prefixes = {"INFO": "  ", "WARN": "⚠️  ", "ERROR": "❌ ", "OK": "✅ "}
+    print(f"{prefixes.get(level, '  ')}{msg}", file=sys.stderr)
+
+
+def deduplicate_files(file_list):
+    """去重并保持插入顺序。返回新列表。"""
+    seen = set()
+    result = []
+    for f in file_list:
+        key = str(f)
+        if key not in seen:
+            seen.add(key)
+            result.append(f)
+    return result
+
+
+def safe_read_md(filepath):
+    """安全读取 .md 文件，返回 (content, line_count)。
+    失败时打印警告并返回 ("", 0)。"""
+    try:
+        content = filepath.read_text(encoding="utf-8")
+        return content, len(content.split("\n"))
+    except (OSError, UnicodeDecodeError) as e:
+        _log(f"无法读取 {filepath.relative_to(ROOT)}: {e}", "WARN")
+        return "", 0
+
+
+def check_tool(command, install_url):
+    """检查外部工具是否可用。不可用时打印提示。返回 bool。"""
+    import subprocess
+    try:
+        subprocess.run([command, "--version"], capture_output=True, check=True)
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        _log(f"{command} 未安装 → {install_url}", "WARN")
+        return False
 
 
 # ============================================================
@@ -249,7 +301,7 @@ def sanitize_filename(title):
     if not title:
         return "untitled"
     # 移除空格和特殊字符，仅保留中文、英文、数字、连字符
-    safe = re.sub(r'[^\w一-鿿\-]', '', title.replace(' ', '').replace('/', ''))
+    safe = re.sub(r'[^\w一-鿿\-\.]', '', title.replace(' ', '').replace('/', ''))
     return safe[:40] if len(safe) > 40 else safe
 
 
@@ -259,11 +311,8 @@ def find_all_files():
     for d in [TOPICS_DIR, REPORTS_DIR]:
         if d.exists():
             for f in sorted(d.rglob("*.md")):
-                try:
-                    lines = len(f.read_text(encoding="utf-8").split("\n"))
-                    files[f] = lines
-                except:
-                    files[f] = 0
+                _, lines = safe_read_md(f)
+                files[f] = lines if lines else 0
     return files
 
 
@@ -283,15 +332,7 @@ def assemble_topic(topic_nums):
             if path and path.exists():
                 files_to_assemble.append(path)
 
-    # 去重保持顺序
-    seen = set()
-    unique_files = []
-    for f in files_to_assemble:
-        if str(f) not in seen:
-            seen.add(str(f))
-            unique_files.append(f)
-
-    return unique_files
+    return deduplicate_files(files_to_assemble)
 
 
 def assemble_depth(max_depth):
@@ -305,15 +346,7 @@ def assemble_depth(max_depth):
             if path and path.exists():
                 files_to_assemble.append(path)
 
-    # 去重保持顺序
-    seen = set()
-    unique_files = []
-    for f in files_to_assemble:
-        if str(f) not in seen:
-            seen.add(str(f))
-            unique_files.append(f)
-
-    return unique_files
+    return deduplicate_files(files_to_assemble)
 
 
 def assemble_path(node_path):
@@ -360,20 +393,25 @@ def assemble_full():
             continue
 
         # 检查该 L1 目录是否有 L2 独立文件（拆分后的章节）
+        # 仅对 topics/ 下的目录启用 L2 子文件自动发现
         l1_dir = path.parent if path.is_file() else path
-        l2_files = sorted(
-            [f for f in l1_dir.glob("*.md") if f.name != "README.md" and not f.name.endswith(".bak")],
-            key=lambda f: f.name
-        )
-        if l2_files:
-            # 有 L2 文件：先加索引 README，再加各 L2 文件
-            if path.exists():
+        if str(l1_dir).startswith(str(TOPICS_DIR)):
+            l2_files = sorted(
+                [f for f in l1_dir.glob("*.md") if f.name != "README.md" and not f.name.endswith(".bak")],
+                key=lambda f: f.name
+            )
+            if l2_files:
+                # 有 L2 文件：先加索引 README，再加各 L2 文件
+                if path.exists():
+                    files_to_assemble.append(path)
+                for l2f in l2_files:
+                    if l2f.exists():
+                        files_to_assemble.append(l2f)
+            else:
+                # 无 L2 文件：直接加 README
                 files_to_assemble.append(path)
-            for l2f in l2_files:
-                if l2f.exists():
-                    files_to_assemble.append(l2f)
         else:
-            # 无 L2 文件：直接加 README
+            # 非 topics 文件（如 reports 下的特殊路径）：直接添加
             files_to_assemble.append(path)
 
     # 3. 交叉洞察（如果大纲中未包含）
@@ -386,15 +424,7 @@ def assemble_full():
     if conclusion.exists() and conclusion not in files_to_assemble:
         files_to_assemble.append(conclusion)
 
-    # 去重保持顺序
-    seen = set()
-    unique_files = []
-    for f in files_to_assemble:
-        if str(f) not in seen:
-            seen.add(str(f))
-            unique_files.append(f)
-
-    return unique_files
+    return deduplicate_files(files_to_assemble)
 
 
 def heading_anchor(title):
@@ -546,18 +576,14 @@ def generate_toc(file_list, use_anchors=False):
         # 多文件模式：链接到文件路径
         for f in file_list:
             rel = f.relative_to(ROOT)
-            try:
-                content = f.read_text(encoding="utf-8")
-                title = None
-                for line in content.split("\n"):
-                    if line.startswith("# "):
-                        title = line.lstrip("#").strip()
-                        break
-                    elif line.startswith("## ") and not title:
-                        title = line.lstrip("#").strip()
-                if not title:
-                    title = rel.stem
-            except:
+            content, _ = safe_read_md(f)
+            title = None
+            for line in content.split("\n") if content else []:
+                stripped = line.strip()
+                if stripped.startswith("# ") or (not title and stripped.startswith("## ")):
+                    title = stripped.lstrip("#").strip()
+                    break
+            if not title:
                 title = rel.stem
             toc += f"- [{title}]({rel})\n"
 
@@ -635,8 +661,8 @@ def suggest_splits():
                     print(f"      {f.parent.name}/{safe}.md")
             else:
                 print(f"    → 无明显的 ## 章节，建议人工审查")
-        except:
-            pass
+        except Exception:
+            pass  # 文件可能无法读取，跳过并继续
         print()
 
 
@@ -751,12 +777,20 @@ def assemble_split(output_dir=None):
 
         with open(output_file, "w", encoding="utf-8") as out:
             for f in topic_files:
-                content = f.read_text(encoding="utf-8")
-                lines = len(content.split("\n"))
+                content, lines = safe_read_md(f)
                 total_lines += lines
 
                 # 去除 HTML 注释
                 content = re.sub(r'<!--.*?-->', '', content, flags=re.DOTALL)
+
+                # 修复相对链接：topics/XX/ → ../../topics/XX/（分卷文件在 reports/split/）
+                # [text](../12-横切主题/README.md)    → [text](../../topics/12-横切主题/README.md)
+                # [text](../12-横切主题/README.md#锚点) → [text](../../topics/12-横切主题/README.md#锚点)
+                content = re.sub(
+                    r'\[([^\]]*)\]\(\.\./(\d{1,2}-[^)]+)\)',
+                    r'[\1](../../topics/\2)',
+                    content
+                )
 
                 out.write(content.strip())
                 out.write("\n\n")
@@ -792,9 +826,33 @@ def assemble_site(output_dir=None):
     src_dir = output_dir / "src"
     src_dir.mkdir(parents=True, exist_ok=True)
 
+    # 尝试自动检测 git remote URL
+    import subprocess
+    git_url = "https://github.com/user/ai-research-lab"
+    repo_name = "ai-research-lab"
+    try:
+        result = subprocess.run(
+            ["git", "remote", "get-url", "origin"],
+            capture_output=True, text=True, cwd=str(ROOT), timeout=5
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            raw = result.stdout.strip()
+            # 支持 HTTPS 和 SSH 两种格式
+            if raw.startswith("https://"):
+                git_url = raw.rstrip("/")
+                git_url = git_url[:-4] if git_url.endswith(".git") else git_url
+            elif raw.startswith("git@"):
+                # git@github.com:user/repo.git → https://github.com/user/repo
+                raw = raw.replace("git@", "https://").replace(":", "/")
+                git_url = raw[:-4] if raw.endswith(".git") else raw
+            repo_name = git_url.rstrip("/").rsplit("/", 1)[-1] if "/" in git_url else repo_name
+            _log(f"检测到 git remote: {git_url}", "OK")
+    except Exception:
+        pass  # 非 git 仓库或 git 不可用，使用默认值
+
     # 1. 生成 book.toml
     book_toml = output_dir / "book.toml"
-    book_toml.write_text("""[book]
+    book_toml.write_text(f"""[book]
 title = "AI 驱动软件工程范式变革"
 authors = ["AI Research Lab"]
 language = "zh-CN"
@@ -806,9 +864,9 @@ build-dir = "book"
 create-missing = false
 
 [output.html]
-site-url = "/ai-research-lab/"
-git-repository-url = "https://github.com/user/ai-research-lab"
-edit-url-template = "https://github.com/user/ai-research-lab/edit/main/{path}"
+site-url = "/{repo_name}/"
+git-repository-url = "{git_url}"
+edit-url-template = "{git_url}/edit/main/{{path}}"
 default-theme = "light"
 preferred-dark-theme = "navy"
 copy-fonts = true
@@ -824,29 +882,45 @@ use-boolean-and = true
 [preprocessor]
 """, encoding="utf-8")
 
-    # 2. 生成 Mermaid 初始化脚本（放在 site/ 根目录，与 book.toml 同级）
-    (output_dir / "mermaid-init.js").write_text("""// Mermaid.js loader for mdBook
-(function () {
+    # 2. 生成 Mermaid 初始化脚本
+    (output_dir / "mermaid-init.js").write_text(f"""// Mermaid.js loader for mdBook — generated by assemble.py
+(function () {{
   'use strict';
   var script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
-  script.onload = function () {
-    mermaid.initialize({
+  script.src = '{MERMAID_CDN}';
+  script.onload = function () {{
+    mermaid.initialize({{
       startOnLoad: true,
       theme: 'default',
       securityLevel: 'loose',
-      flowchart: { useMaxWidth: true, htmlLabels: true },
-    });
-  };
+      flowchart: {{ useMaxWidth: true, htmlLabels: true }},
+    }});
+  }};
   document.head.appendChild(script);
-})();
+}})();
 """, encoding="utf-8")
 
     # 3. 生成 SUMMARY.md（从大纲树生成嵌套导航）
+    _log("生成 SUMMARY.md 导航...")
     summary = generate_summary_md()
-    (src_dir / "SUMMARY.md").write_text(summary, encoding="utf-8")
+    summary_path = src_dir / "SUMMARY.md"
+    summary_path.write_text(summary, encoding="utf-8")
+    # 快速校验 SUMMARY.md 中引用的文件是否存在
+    missing_refs = []
+    for line in summary.split("\n"):
+        m = re.search(r'\(([^)]+\.md)\)', line)
+        if m:
+            ref = src_dir / m.group(1)
+            if not ref.exists():
+                missing_refs.append(m.group(1))
+    if missing_refs:
+        _log(f"SUMMARY.md 引用了 {len(missing_refs)} 个不存在的文件:", "WARN")
+        for mr in missing_refs[:5]:
+            _log(f"  → {mr}", "WARN")
+    else:
+        _log("SUMMARY.md 文件引用校验通过", "OK")
 
-    # 3. 复制所有内容文件
+    # 4. 复制所有内容文件
     files_copied = 0
     total_lines = 0
 
@@ -854,10 +928,9 @@ use-boolean-and = true
     for report_name in ["00-引言.md", "10-交叉洞察.md", "11-结论与参考文献.md"]:
         src = REPORTS_DIR / report_name
         if src.exists():
-            content = src.read_text(encoding="utf-8")
-            total_lines += len(content.split("\n"))
-            dst = src_dir / report_name
-            dst.write_text(content, encoding="utf-8")
+            content, lines = safe_read_md(src)
+            total_lines += lines
+            (src_dir / report_name).write_text(content, encoding="utf-8")
             files_copied += 1
 
     # 各 topic 目录
@@ -867,19 +940,19 @@ use-boolean-and = true
         dst_dir = src_dir / topic_dir.name
         dst_dir.mkdir(exist_ok=True)
         for md_file in topic_dir.glob("*.md"):
-            content = md_file.read_text(encoding="utf-8")
-            total_lines += len(content.split("\n"))
-            # 修复指向 reports/ 的相对链接
+            content, lines = safe_read_md(md_file)
+            total_lines += lines
             content = content.replace("../reports/", "./")
             (dst_dir / md_file.name).write_text(content, encoding="utf-8")
             files_copied += 1
 
-    # 4. 生成首页 README.md
+    # 5. 生成首页 README.md
+    from datetime import date
+    today = date.today().strftime("%Y 年 %-m 月") if date.today().month > 9 else date.today().strftime("%Y 年 %m 月")
     readme = src_dir / "README.md"
-    if not readme.exists():
-        readme.write_text("""# AI 驱动软件工程范式变革
+    readme.write_text(f"""# AI 驱动软件工程范式变革
 
-> 完整研究报告 | 2026 年 6 月
+> 完整研究报告 | {today}
 
 本网站是 "AI Research Lab" 项目的完整文档站点，
 涵盖从需求工程到生产运维的全链路 AI 化研究。
@@ -914,21 +987,37 @@ use-boolean-and = true
 - **在线阅读**：使用左侧边栏导航
 - **搜索**：按 `s` 键打开搜索
 - **打印**：每个页面均可直接打印（浏览器 `Ctrl+P`）
-- **PDF**：运行 `python assemble.py pdf-ready` 生成 PDF 版本
+- **PDF**：运行 `python assemble.py publish` 生成全格式离线包
 """, encoding="utf-8")
 
     print(f"✅ mdBook 站点已生成: {output_dir}")
-    print(f"   文件: {files_copied}  |  总行数: {total_lines}")
+    print(f"   文件: {files_copied}  |  总行数: {total_lines}  |  SUMMARY 校验: {'通过' if not missing_refs else f'{len(missing_refs)} 引用缺失'}")
+
+    # 尝试自动构建
+    if check_tool("mdbook", "https://rust-lang.github.io/mdBook/guide/installation.html"):
+        print()
+        print("🔨 自动构建静态站点...")
+        import subprocess
+        result = subprocess.run(
+            ["mdbook", "build"],
+            capture_output=True, text=True, cwd=str(output_dir)
+        )
+        if result.returncode == 0:
+            book_dir = output_dir / "book"
+            html_count = len(list(book_dir.rglob("*.html"))) if book_dir.exists() else 0
+            print(f"   ✅ 构建成功 → {book_dir.relative_to(ROOT)} ({html_count} 个 HTML 页面)")
+        else:
+            print(f"   ⚠️  构建失败，请手动运行: cd {output_dir} && mdbook build")
+            # 不打印 stderr，mdBook 的错误信息对用户友好
+    else:
+        print()
+        print("🔨 手动构建静态站点：")
+        print(f"   cd {output_dir} && mdbook build")
     print()
-    print("🔨 构建静态站点：")
-    print(f"   cd {output_dir}")
-    print("   mdbook build")
+    print("📖 本地预览:")
+    print(f"   cd {output_dir} && mdbook serve --open")
     print()
-    print("📖 本地预览：")
-    print("   mdbook serve --open")
-    print()
-    print("🚀 部署到 GitHub Pages：")
-    print("   # 将 site/book/ 目录推送到 gh-pages 分支即可")
+    print(f"🚀 部署: 将 {output_dir}/book/ 推送到 GitHub Pages 即可")
 
 
 def generate_summary_md():
@@ -1369,9 +1458,8 @@ def generate_backlinks(inject=False):
 
     for f in all_files:
         source_rel = path_to_rel[str(f)]
-        try:
-            content = f.read_text(encoding="utf-8")
-        except:
+        content, _ = safe_read_md(f)
+        if not content:
             continue
 
         for match in link_pattern.finditer(content):
@@ -1424,9 +1512,8 @@ def generate_backlinks(inject=False):
             if rel not in backlinks:
                 continue
 
-            try:
-                content = f.read_text(encoding="utf-8")
-            except:
+            content, _ = safe_read_md(f)
+            if not content:
                 continue
 
             sources = backlinks[rel]
@@ -1445,8 +1532,8 @@ def generate_backlinks(inject=False):
                 try:
                     src_path = ROOT / src
                     link = os.path.relpath(src_path, f.parent).replace("\\", "/")
-                except:
-                    link = src
+                except (ValueError, OSError):
+                    link = src  # fallback：路径在不同盘符下可能无法计算相对路径
                 backlink_section += f"- [{text}]({link})\n"
 
             # 检查是否已有反向链接区块
@@ -1465,6 +1552,183 @@ def generate_backlinks(inject=False):
         print(f"   (每个文件末尾增加了 '📎 被以下章节引用' 区块)")
 
     return backlinks
+
+
+# ============================================================
+# 第 7 部分：一键发布
+# ============================================================
+
+def assemble_publish():
+    """一键生成所有发布格式：site + epub + pdf-ready + split + markmap。
+
+    这是面向外部读者的完整发布工作流。自动跳过不可用的工具
+    （如未安装 Pandoc 则跳过 ePub），输出资产清单。
+    """
+    from datetime import date
+    today_str = date.today().strftime("%Y-%m-%d")
+
+    print("=" * 60)
+    print("  📦 AI Research Lab — 一键发布")
+    print(f"  日期: {today_str}")
+    print("=" * 60)
+
+    assets = []  # [(format, path, size_kb)]
+
+    # ── 1. mdBook 站点 ──
+    print("\n── 1/5  mdBook 静态站点 ──")
+    site_dir = ROOT / "site"
+    assemble_site(site_dir)
+    book_dir = site_dir / "book"
+    if book_dir.exists():
+        html_files = list(book_dir.rglob("*.html"))
+        total_kb = sum(f.stat().st_size for f in html_files) / 1024
+        print(f"   ✅ 站点 ({len(html_files)} 页面, {total_kb:.0f} KB)")
+        assets.append(("mdBook 站点", str(book_dir.relative_to(ROOT)), total_kb))
+    else:
+        print(f"   ⚠️  站点源已生成，但需安装 mdBook 进行构建")
+        print(f"      → cd site && mdbook build")
+        assets.append(("mdBook 源", str(site_dir.relative_to(ROOT)), 0))
+
+    # ── 2. ePub 电子书 ──
+    print("\n── 2/5  ePub 电子书 ──")
+    if check_tool("pandoc", "https://pandoc.org/installing.html"):
+        epub_file = REPORTS_DIR / "研究报告.epub"
+        result = assemble_epub(epub_file)
+        if result and epub_file.exists():
+            size_kb = epub_file.stat().st_size / 1024
+            print(f"   ✅ ePub ({size_kb:.0f} KB)")
+            assets.append(("ePub 电子书", str(epub_file.relative_to(ROOT)), size_kb))
+        else:
+            print(f"   ❌ ePub 生成失败")
+    else:
+        print(f"   ⏭️  跳过 (Pandoc 未安装)")
+
+    # ── 3. PDF 就绪文件 ──
+    print("\n── 3/5  PDF 就绪文件 ──")
+    pdf_md = REPORTS_DIR / "研究报告-pdf-ready.md"
+    assemble_pdf_ready(pdf_md)
+    if pdf_md.exists():
+        size_kb = pdf_md.stat().st_size / 1024
+        print(f"   ✅ PDF-ready ({size_kb:.0f} KB)")
+        assets.append(("PDF 就绪文件", str(pdf_md.relative_to(ROOT)), size_kb))
+
+        # 尝试直接生成 PDF
+        if check_tool("pandoc", ""):
+            print("   🔨 尝试生成 PDF (xelatex)...")
+            import subprocess
+            pdf_file = REPORTS_DIR / "研究报告.pdf"
+            # 不阻塞：PDF 生成可能很慢，仅尝试
+            result = subprocess.run(
+                ["pandoc", str(pdf_md),
+                 "--pdf-engine=xelatex", "-o", str(pdf_file),
+                 "--toc", "--toc-depth=3"],
+                capture_output=True, text=True, timeout=120
+            )
+            if result.returncode == 0 and pdf_file.exists():
+                size_kb = pdf_file.stat().st_size / 1024
+                print(f"   ✅ PDF ({size_kb:.0f} KB)")
+                assets.append(("PDF 文档", str(pdf_file.relative_to(ROOT)), size_kb))
+            else:
+                print(f"   ⚠️  PDF 生成失败（可能需要安装中文字体）")
+                print(f"      → python assemble.py pdf-help 查看字体配置")
+
+    # ── 4. L1 分卷 ──
+    print("\n── 4/5  L1 分卷文件 ──")
+    split_dir = REPORTS_DIR / "split"
+    assemble_split(split_dir)
+    split_files = list(split_dir.glob("*.md")) if split_dir.exists() else []
+    total_kb = sum(f.stat().st_size for f in split_files) / 1024
+    print(f"   ✅ 分卷 ({len(split_files)} 文件, {total_kb:.0f} KB)")
+    assets.append(("L1 分卷", str(split_dir.relative_to(ROOT)), total_kb))
+
+    # ── 5. 增强版 Markmap ──
+    print("\n── 5/5  交互式思维导图 ──")
+    markmap_file = ROOT / "research-map-enhanced.html"
+    generate_enhanced_markmap(markmap_file)
+    if markmap_file.exists():
+        size_kb = markmap_file.stat().st_size / 1024
+        print(f"   ✅ Markmap ({size_kb:.0f} KB)")
+        assets.append(("Markmap 思维导图", str(markmap_file.relative_to(ROOT)), size_kb))
+
+    # ── 资产清单 ──
+    print(f"\n{'=' * 60}")
+    print(f"  📋 发布资产清单 ({today_str})")
+    print(f"{'=' * 60}")
+    for fmt, path, size in sorted(assets, key=lambda x: -x[2]):
+        print(f"  {size:>8.0f} KB  {fmt:<20} → {path}")
+    print(f"{'=' * 60}")
+    print(f"  总计: {len([a for a in assets if a[2] > 0])} 个有效产出")
+    print(f"  就绪: {today_str}")
+    print()
+    print("🌐 在线预览:")
+    if (ROOT / "site" / "book" / "index.html").exists():
+        print(f"   cd site && mdbook serve --open")
+    else:
+        print(f"   cd site && mdbook build && mdbook serve --open")
+    print()
+    print("📤 部署到 GitHub Pages:")
+    print(f"   1. Settings → Pages → Source: GitHub Actions")
+    print(f"   2. 或手动: gh-pages 分支推送 site/book/ 目录")
+
+    return assets
+
+
+def show_env_check():
+    """检查发布环境：列出可用/缺失的工具。"""
+    import subprocess
+
+    print("=" * 60)
+    print("  发布环境检查")
+    print("=" * 60)
+
+    checks = [
+        ("Python", ["python", "--version"], "≥ 3.9"),
+        ("Git", ["git", "--version"], ""),
+        ("Pandoc (PDF/ePub)", ["pandoc", "--version"], "https://pandoc.org/installing.html"),
+        ("mdBook (站点)", ["mdbook", "--version"], "https://rust-lang.github.io/mdBook/guide/installation.html"),
+        ("xelatex (PDF)", ["xelatex", "--version"], "MiKTeX / TeX Live"),
+        ("gh CLI (部署)", ["gh", "--version"], "https://cli.github.com/"),
+    ]
+
+    all_ok = True
+    for name, cmd, extra in checks:
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+            if result.returncode == 0:
+                version = result.stdout.strip().split("\n")[0][:60]
+                print(f"  ✅ {name:<22} {version}")
+            else:
+                print(f"  ⚠️  {name:<22} 已安装但返回异常")
+                all_ok = False
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            print(f"  ❌ {name:<22} 未安装  {'→ ' + extra if extra else ''}")
+            all_ok = False
+
+    # Git remote 检查
+    print()
+    try:
+        result = subprocess.run(
+            ["git", "remote", "get-url", "origin"],
+            capture_output=True, text=True, cwd=str(ROOT), timeout=5
+        )
+        if result.returncode == 0:
+            print(f"  📡 Git remote: {result.stdout.strip()}")
+        else:
+            print(f"  ⚠️  未配置 git remote origin（部署时需要）")
+    except Exception:
+        print(f"  ⚠️  无法检测 git remote（非 git 仓库？）")
+
+    # 文件统计
+    nodes = parse_outline()
+    files = find_all_files()
+    print()
+    print(f"  📄 研究节点: {len(nodes)}  |  文件总数: {len(files)}  |  总行数: {sum(files.values())}")
+
+    print("=" * 60)
+    if all_ok:
+        print("  🎉 核心发布工具全部就绪！运行: python assemble.py publish")
+    else:
+        print("  💡 缺失工具不影响文档编辑，仅影响特定发布格式的生成")
 
 
 # ============================================================
@@ -1540,6 +1804,12 @@ def main():
     elif mode == "backlinks":
         inject = "--inject" in sys.argv
         generate_backlinks(inject=inject)
+
+    elif mode == "publish":
+        assemble_publish()
+
+    elif mode == "env-check":
+        show_env_check()
 
     else:
         print(f"未知模式: {mode}", file=sys.stderr)

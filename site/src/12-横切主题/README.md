@@ -1,6 +1,6 @@
 ## 第十二章：横切主题 — AI 软件工程范式横切深度分析
 
-> **📌 TL;DR — 本章核心发现** · ⏱ 35 分钟
+> **📌 TL;DR — 本章核心发现** · ⏱ 15 分钟（全章深读）
 >
 > 1. **"编码从来都不是瓶颈"** — 瓶颈从编码全局位移到需求定义（第一瓶颈）、代码审查（等待 >16 小时）、验证（完全跟不上生成速度）
 > 2. **CI 成功率降至 70.8%（五年最低），MTTR 升至 72-80 分钟** — AI 代码的"量"直接压垮了传统质量保障体系
@@ -398,6 +398,23 @@ SmartBear在2025年10月的分析揭示了一个关键的不对称性：**编码
 > 综合来源：InfoQ/Agoda Bottleneck Analysis (2026); MIT/Wharton/NBER Working Paper 35275 (100K+ GitHub Devs); CircleCI 2026 State of Software Delivery (28M Workflows); Waydev 2026 Report; Sonar "Coding Personalities of Leading LLMs" (2025); Veracode AI Code Security Report (2025.10); AlixPartners 2026 Enterprise Predictions; Faros AI Engineering Impact Report (2025.7); Radical Ventures/Hebbia Organizational Analysis; Fortune/Founders Factory 2025; ThoughtWorks Technology Radar (2025.11); CSA/Datasaur/SmartBear Autonomy Frameworks (2025-2026); NIST AI RMF; JFrog AppTrust; FORGE CLI; CycloneDX 1.6; MUTGEN/SpecGen/Meta ACH Research Papers; 中国科技部 Autonomous Driving Ethics Guidelines (2025.7)
 
 ---
+---
+
+## 交叉引用
+
+本章作为全报告的"横切层"，连接早期基础章节与晚期 Agent/Harness 专题：
+
+- **01 需求工程** — "瓶颈位移"的核心论据：编码不再稀缺 → 需求定义成为第一瓶颈
+- **04 后端与API** — "架构漂移"与"信号体系崩溃"共享同一底层机制：Agent 局部最优 → 全局劣化
+- **06 测试与QA** — "覆盖率信号贬值"是"五大传统信号贬值"中最具代表性的案例
+- **08 生产运维** — "自动化悖论"是"速度 vs 质量悖论"在运维领域的实例
+- **09 角色重塑** — "代码贬值，判断升值"经济学是本章"资源配置"分析的基础
+- **14 Agent-Harness** — Agent 指令文件成为基础设施（12.4）与 Harness 架构直接相关
+- **18 提示工程** — "Vibe Architecting"（18.6）是速度挤压质量的具体机制
+
+---
+
+> **🔗 下一章预览**：本章提炼了 AI 软件工程范式的七大横切洞察——瓶颈从编码全局位移到需求定义和验证环节，代码覆盖率等传统信号全面贬值，AGENTS.md 正从"配置文件"进化为 IaC 级别的基础设施。这些洞察揭示了一个底层线索：在整个 AI 工程化链路中，Markdown 作为 Spec、指令文件和研究知识库的通用载体，已经从"轻量标记语言"悄然升级为"AI Agent 的核心交互格式"。**[第十三章：Markdown 工程化 — AI 时代的文档基础设施](../13-Markdown工程化/README.md)** 将系统阐述 Markdown 工具链与代码工具链的完整对等映射（AST/LSP/CI/SemShift），以及 Markdown 作为 AI Agent"统一中间表示"的可能性论证。
 
 ---
 

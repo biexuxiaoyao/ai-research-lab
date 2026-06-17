@@ -1,8 +1,13 @@
 ## 第十三章：Markdown 工程化 — AI 时代的文档基础设施
 
-> **状态**：✅ L3 | 2026-06-14
+> **📌 TL;DR — 本章核心发现** · ⏱ 5 分钟（全章深读）
+>
+> 1. **Markdown 从"轻量标记语言"升级为"AI Agent 的核心交互格式"** — CLAUDE.md、AGENTS.md、Spec 文档、研究知识库全部是 Markdown，这催生了完整的工程化工具体系
+> 2. **Markdown 工具链与代码工具链形成完整对等映射** — AST 解析（tree-sitter/Marksman LSP）→ 结构化搜索（ast-grep）→ 语义 Diff（SemShift）→ CI 质量门禁（markdownlint+lychee+vale），与 Java/代码工程体系一一对应
+> 3. **Wiki-Link `[[双向链接]]` 是 Markdown 工程化的范式突破** — 从"文件夹层级"到"网络化知识管理"，但需要权衡工具链兼容性和长期可维护性
+> 4. **DOA（Dead-On-Arrival）检测和 SemShift（语义变更追踪）是前沿方向** — 自动检测过时文档、追踪文档语义变更，类比代码的"deprecation warning"和"semantic versioning"
 
-## 摘要
+### 摘要
 
 AI 的爆发使 Markdown 从"轻量标记语言"升级为"AI Agent 的核心交互格式"。`CLAUDE.md`、`AGENTS.md`、Spec 文档、研究知识库——全部是 Markdown。这催生了完整的 Markdown 工程化工具链（AST → LSP → Lint → CI → MCP），与 Java/代码工程化体系形成完整对等映射。
 

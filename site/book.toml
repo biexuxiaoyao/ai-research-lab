@@ -11,8 +11,8 @@ create-missing = false
 
 [output.html]
 site-url = "/ai-research-lab/"
-git-repository-url = "https://github.com/user/ai-research-lab"
-edit-url-template = "https://github.com/user/ai-research-lab/edit/main/{path}"
+git-repository-url = "https://github.com/biexuxiaoyao/ai-research-lab"
+edit-url-template = "https://github.com/biexuxiaoyao/ai-research-lab/edit/main/{path}"
 default-theme = "light"
 preferred-dark-theme = "navy"
 copy-fonts = true

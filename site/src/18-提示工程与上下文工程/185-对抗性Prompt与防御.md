@@ -8,7 +8,7 @@
 
 ### 四层防御体系
 
-```
+```text
 层级1: 输入净化 (Input Sanitization)
   ├── 嵌入异常检测 (cosine距离 vs 已知注入模式)
   ├── 模式匹配+关键词过滤 (signature detection)
@@ -145,13 +145,13 @@ PromptKeeper将现有防御归为三类，各有局限：
 
 **分流设计**:
 
-```
+```text
 hash(user_id + scene) % 100 < traffic_b_percent → treatment, else → control
 ```
 
 **推荐渐进式推出层级**:
 
-```
+```text
 5% → 观察数小时/天 → 20% → 全量切换
 ```
 
@@ -187,7 +187,7 @@ hash(user_id + scene) % 100 < traffic_b_percent → treatment, else → control
 
 ### 渐进式发布与全生命周期管理
 
-```
+```text
 开发 (快速迭代，version标签: latest)
     ↓
 预发 (回归测试 + 人工审查，version标签: staging)
@@ -203,7 +203,7 @@ hash(user_id + scene) % 100 < traffic_b_percent → treatment, else → control
 
 ### 可观测性最低日志要求
 
-```
+```yaml
 每请求必记字段:
   request_id, timestamp, user_id_hash, scene
   prompt_version, prompt_render_hash

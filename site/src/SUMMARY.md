@@ -20,6 +20,7 @@
   - [上下文与状态管理](14-Agent-Harness与运行时/144-上下文与状态管理.md)
   - [Agent 生命周期管理](14-Agent-Harness与运行时/145-Agent生命周期管理.md)
   - [多 Agent 编排引擎](14-Agent-Harness与运行时/146-多Agent编排引擎.md)
+  - [Harness可观测性](14-Agent-Harness与运行时/147-Harness可观测性.md)
   - [指令文件加载机制](14-Agent-Harness与运行时/148-指令文件加载机制.md)
   - [Meta-Harness 自动化治理](14-Agent-Harness与运行时/149-Meta-Harness自动化治理.md)
 - [模型选型与评估](15-模型选型与评估/README.md)
@@ -46,6 +47,7 @@
   - [指令文件工程](18-提示工程与上下文工程/183-指令文件工程.md)
   - [多轮交互策略](18-提示工程与上下文工程/184-多轮交互策略.md)
   - [对抗性 Prompt 与防御](18-提示工程与上下文工程/185-对抗性Prompt与防御.md)
+  - [DESIGN.md 与意图工程](18-提示工程与上下文工程/186-DESIGN.md与意图工程.md)
 
 [交叉洞察](10-交叉洞察.md)
 [结论与参考文献](11-结论与参考文献.md)

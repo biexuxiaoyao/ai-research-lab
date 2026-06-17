@@ -8,7 +8,7 @@
 
 人类代码和 AI 代码生成遵循两种根本不同的模型：
 
-```
+```text
 人类写代码                              AI 生成代码
 ─────────                              ────────────
 需求理解 → 方案权衡 → 设计决策          "输出能通过测试的代码"
@@ -66,7 +66,7 @@ arXiv 2604.16323（Casserini et al., 2026, CHI Workshop）提出 Agentic Entropy
 
 2025-2026 年各大工具的统一收敛模式：
 
-```
+```text
 传统（反模式）：
   用户 Prompt → AI 生成代码 → 人审查 diff
   问题：意图误解在最后才暴露，修复成本最高
@@ -95,7 +95,7 @@ arXiv 2603.21692（2026年3月）提出了 AER（Agent Execution Record）标准
 
 三层门禁设计：
 
-```
+```text
 L1 — 任务门禁（Task Gate）
   没有 task.md → 禁止 Edit/Write
   
@@ -117,7 +117,7 @@ L3 — 审查门禁（Review Gate）
 
 社区正在推动 DESIGN.md 作为 CLAUDE.md / AGENTS.md 之外的第三标准文件：
 
-```
+```text
 AGENTS.md   → 怎么做事（操作层面：build、test、lint、commit）
 CLAUDE.md   → 行为边界（约束层面：不能做什么、架构红线）
 DESIGN.md   → 为什么这样设计（意图层面：方案选择、拒绝的替代方案、权衡）
@@ -171,5 +171,7 @@ AI Agent 工程学的四个支柱：
 ## 📎 被以下章节引用
 
 - [18.6 DESIGN.md与意图工程](../09-角色重塑与治理/README.md)
+- [12.5 速度 vs 质量悖论](../12-横切主题/README.md)
+- [14.3 权限模型与沙盒](../14-Agent-Harness与运行时/143-权限模型与沙盒.md)
 - [18.6 DESIGN.md与意图工程](183-指令文件工程.md)
 - [18.6 DESIGN.md与意图工程](README.md)

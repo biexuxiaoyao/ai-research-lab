@@ -1,6 +1,6 @@
 ## 第七章：CI/CD 与 DevOps 的 AI 化
 
-> **📌 TL;DR — 本章核心发现** · ⏱ 21 分钟
+> **📌 TL;DR — 本章核心发现** · ⏱ 5 分钟（全章深读）
 >
 > 1. **PR 暴增危机是 AI 编码的直接后果** — AI 使每开发者 PR 产出可达 5 倍+，但人类 Code Review 吞吐量不变，PR 审查中位时间攀升 400%+
 > 2. **AI Code Review 已形成四大阵营** — CodeRabbit（200 万+ 仓库）、Qodo（蓝队/红队模型）、GitHub Copilot Code Review、Amazon Q Developer，人工 Review 正在从"代码是否正确"提升为"架构决策是否合理"
@@ -198,3 +198,7 @@ Agent 时代 Git 的两个根本摩擦：① Staging area 对 Agent 无意义—
 **L4 CircleCI 2026 报告深度数据**：分析 **2,800 万+ CI/CD 工作流**、22,000+ 组织（2026.2）。关键指标：主分支 CI 成功率降至 **70.8%**（五年最低）；MTTR 升至 **72-80 分钟**（从 <60 分钟）；精英团队维持 6 秒中位工作流时长和 59.2 分钟 MTTR。AI 辅助 PR 的 CI 失败率比纯人工 PR 高约 40%。_Spotify Backstage+AI_（KubeCon EU 2026）：AI 知识助手降低开发者"goalie workload" ~47%。_Dropbox Nova_：编码 Agent 云服务平台，用于 flaky test 修复、迁移、依赖升级和崩溃响应。_Wix xEngineer_：全 SDLC 自动化，"Deslopping"（清除 AI 膨胀）成为一等关注点。
 
 **L4 AI Code Review 工具实证对比 (2026)**：12 工具/50 PR 基准——SonarQube AI 误报率 ~5%（最低），Snyk Code ~12%，CodeRabbit 11-28%（学习后降 40%），GitHub Copilot CR 14-35%，Qodo 9-25%，人工基线 ~8%/92% 精度。层叠工具（CodeRabbit + Snyk）优于单一工具。核心结论：无工具能完全替代人工审查——人工仍以 92% 精度/8% 误报率为黄金标准。
+
+---
+
+> **🔗 下一章预览**：本章揭示了 CI/CD 管线在 AI 代码洪流冲击下的系统性危机——PR 数量 5 倍增长导致审查队列堵塞，CI 成功率跌至 70.8%，AI 来源 CVE 在 2026 Q1 已超过 2025 全年。但代码终究要部署到生产环境才能真正产生价值。**[第八章：生产运维的 AI 化](../08-生产运维/README.md)** 将探讨代码上线后的 AI 自治运维——闭环学习架构如何将 MTTR 降低 85%，以及"自动化悖论"（AI 运维越强大，系统可能变得越脆弱）的深层风险。

@@ -1,6 +1,6 @@
 ## 第八章：生产运维的 AI 化
 
-> **📌 TL;DR — 本章核心发现** · ⏱ 20 分钟
+> **📌 TL;DR — 本章核心发现** · ⏱ 5 分钟（全章深读）
 >
 > 1. **闭环学习架构正在成熟** — 观测→检测→诊断→修复→验证→学习的六步循环中，AI 已能将 MTTR 降低 85%，90%+ 告警被自动抑制
 > 2. **"Agentic Infrastructure"概念出现** — Vercel 提出基础设施应"为 Agent 而设计"，30%+ 的部署已由 AI Agent 发起
@@ -191,5 +191,9 @@ Vercel 30%+ 部署由 AI Agent 发起，标志着基础设施从"为人类设计
 Uber COO Andrew Macdonald 披露公司 2026 年 AI 工具预算在 **4 月即耗尽全年配额**，每工程师月均 $500-$2,000。Microsoft 于 2026 年 5 月取消大部分 Claude Code 许可证，指示团队返回 Copilot CLI——尽管工程师偏好 Claude Code。某未具名企业在单月内对 Anthropic 产生 **$5 亿账单**（Axios, 2026），无任何使用护栏。Ramp 报告企业客户月均 AI Token 支出自 2025 年 1 月以来增长 **13×**。仅 7.5% 企业将 FinOps 嵌入 AI 项目，>40% 企业 AI 支出浪费超 15%。谷歌、微软内部已实施硬性 Token 预算和 Agent 步数上限作为成本护栏。
 
 > 综合来源：Sentry Seer 94.5% Accuracy; PagerDuty AI 90%+ Alert Suppression; LogicMonitor Edwin AI MTTR -85%; KubeZilla (2026.6); Rubrik Agent Cloud SAGE; Gravitee 2026 Survey (900+ Orgs); Amazon March 2026 Incident; Uber AI Budget Exhaustion; Deloitte AI Token Spend Dynamics; FinOps X 2026; Gartner AI SRE Market Guide (2026); "自动化悖论" Framework
+
+---
+
+> **🔗 下一章预览**：本章展示了 AI 在生产运维中的深度渗透——从 Sentry Seer 94.5% 根因分析准确率到 LogicMonitor 85% MTTR 降低。然而，当 AI 渗透到从需求到运维的全链路之后，一个更根本的问题浮现：如果 AI 能做所有环节，那么人做什么？**[第九章：角色重塑与治理框架](../09-角色重塑与治理/README.md)** 将系统阐述 Vibe Coding 向 Agentic Engineering 的不可逆演化、七大软件工程角色的转型路线图、"代码贬值，判断升值"的经济学规律，以及 Intent Engineer 这一跨领域新角色的诞生。
 
 ---

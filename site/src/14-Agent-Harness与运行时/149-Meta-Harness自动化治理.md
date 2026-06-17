@@ -8,7 +8,7 @@
 
 Harness 工程本身也是一个软件工程问题。Meta-Harness 的核心命题是：**Harness 的创建、维护和演进能否交给 AI 辅助——只要人保留最终决策权？**
 
-```
+```text
 传统 Harness 工程：
   人分析项目 → 人写 CLAUDE.md → 人配置 Hook → 人维护规则
 
@@ -45,7 +45,7 @@ Meta-Harness：
 
 新项目加入 Harness 体系的目标流程：
 
-```
+```text
 Step 1: AI 扫描项目
   claude /init → 自动生成 CLAUDE.md（项目索引）
   claudenv    → 自动生成 rules/ + hooks/ + skills/ + settings.json
@@ -74,7 +74,7 @@ Step 4: 提交 → PR 合入仓库
 
 "Rules from Failures" 循环：
 
-```
+```text
 每次 Claude 犯错      → 建议追加一条规则到 CLAUDE.md
 每次 Review 重复意见   → 建议创建一个 Skill
 每次 Bug 溜过门禁     → 建议新增一个 Hook
@@ -141,7 +141,7 @@ Step 4: 提交 → PR 合入仓库
 
 Meta-Harness 概念与多个现有主题交叉：
 
-- [12.4 Agent指令文件成为基础设施](../12-横切主题/README.md#agent指令文件成为基础设施) — Meta-Harness 代表了指令文件演进的第 5 阶段
+- [12.4 Agent指令文件成为基础设施](../12-横切主题/README.md#124-agent指令文件成为基础设施) — Meta-Harness 代表了指令文件演进的第 5 阶段
 - [17.4 回归检测与告警](../17-可观测性与评估/174-回归检测与告警.md) — 巡检和复盘本质上是针对 Harness 规则的质量回归检测
 - [14.4 上下文与状态管理](144-上下文与状态管理.md) — Auto Memory 是 Meta-Harness 的数据基础
 
@@ -155,5 +155,7 @@ Meta-Harness 概念与多个现有主题交叉：
 
 - [14.9 Meta-Harness自动化治理](../09-角色重塑与治理/README.md)
 - [14.9 Meta-Harness自动化治理](../12-横切主题/README.md)
+- [14.4 上下文与状态管理](144-上下文与状态管理.md)
 - [149-Meta-Harness自动化治理](README.md)
+- [17.4 回归检测与告警](../17-可观测性与评估/174-回归检测与告警.md)
 - [14.9 Meta-Harness自动化治理](../18-提示工程与上下文工程/183-指令文件工程.md)

@@ -769,7 +769,7 @@
 - 14.6.2 Agent 间通信协议（消息传递 / 共享状态 / 黑板模式） ✅ [L3]
 - 14.6.3 工作流定义语言（Workflow-as-Code / YAML / Script） ✅ [L3]
 
-### 14.7 Harness 的可观测性 ✅ [L3]
+### 14.7 Harness可观测性 ✅ [L3]
 
 - 14.7.1 Agent 行为的 Trace / Log / Metrics 三支柱 ✅ [L3]
 - 14.7.2 Token 消耗的实时追踪与成本归因 ✅ [L3]
