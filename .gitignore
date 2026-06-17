@@ -1,0 +1,23 @@
+# mdBook build output
+site/book/
+
+# Python
+__pycache__/
+*.pyc
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Node (for markmap)
+node_modules/

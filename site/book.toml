@@ -1,0 +1,28 @@
+[book]
+title = "AI 驱动软件工程范式变革"
+authors = ["AI Research Lab"]
+language = "zh-CN"
+multilingual = false
+src = "src"
+
+[build]
+build-dir = "book"
+create-missing = false
+
+[output.html]
+site-url = "/ai-research-lab/"
+git-repository-url = "https://github.com/user/ai-research-lab"
+edit-url-template = "https://github.com/user/ai-research-lab/edit/main/{path}"
+default-theme = "light"
+preferred-dark-theme = "navy"
+copy-fonts = true
+mathjax-support = false
+additional-css = []
+additional-js = []
+no-section-label = true
+
+[output.html.search]
+limit-results = 30
+use-boolean-and = true
+
+[preprocessor]

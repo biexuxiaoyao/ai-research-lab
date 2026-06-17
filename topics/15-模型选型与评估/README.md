@@ -1,0 +1,40 @@
+## 第十五章：模型选型与评估
+
+> **📌 TL;DR — 本章核心发现**
+>
+> 1. **编码能力排名快速更迭** — SWE-bench Verified/Pro 排行榜是动态战场，Claude Code 在确定性代码生成上领先（98.4%），但不同模型在不同语言/任务上优劣各异
+> 2. **选型决策需要多维框架** — 不能只看基准分数，需综合评估：编码能力 × 成本 × 延迟 × 上下文窗口 × 工具调用可靠性 × 安全合规
+> 3. **模型路由（Model Router）是成本优化的关键架构** — 简单任务用便宜模型，复杂任务自动升级到高端模型，可节省 40-60% 成本而不显著影响质量
+> 4. **Prompt Caching 对成本结构有革命性影响** — 长对话/多轮 Agent 场景下，缓存可降低 90% 输入成本，直接影响模型选型决策
+
+### 第 1 层：现状与工具
+
+---
+
+## 目录
+
+- [15.1 编码模型能力对比](./151-编码模型能力对比.md)
+- [15.2 模型选型决策框架](./152-模型选型决策框架.md)
+- [15.3 评估基础设施](./153-评估基础设施.md)
+- [15.4 成本管理与优化](./154-成本管理与优化.md)
+- [15.5 微调与定制](./155-微调与定制.md)
+
+> 综合来源：SWE-bench Verified/Pro Leaderboards (2026); LiveCodeBench (2026.4); Aider-Polyglot Edit; Claude Code Language Benchmark; Adevinta Enterprise Pilot (2025); MorphLLM Cost Calculator (2026); Digital Applied TCO Analysis (2026); arXiv:2601.06007 Prompt Caching; DeepSeek V4 Pro Pricing (2026)
+
+---
+
+## 概述
+
+模型选型与评估是 AI 驱动软件工程范式变革研究的重要组成部分。
+本目录包含 5 个 L2 独立文件，每个文件对应研究大纲中的一个二级节点。
+
+## 拆分说明
+
+原始 README.md 已备份为 `README.md.bak`。
+拆分后每个 L2 节点独立维护，便于增量更新和并行编辑。
+
+---
+
+## 📎 被以下章节引用
+
+- [第 15 章：模型选型与评估](../14-Agent-Harness与运行时/README.md)
