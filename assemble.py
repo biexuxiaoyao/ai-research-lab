@@ -221,9 +221,15 @@ def node_to_path(node_number, title=""):
         # L2 节点 → 优先独立文件，不存在则 fallback 到 README.md
         l2_num = parts[1]
         safe_title = sanitize_filename(title)
+        # Pattern 1: "1-Harness架构模型.md" (L2 number only)
         specific_file = l1_dir / f"{l2_num}-{safe_title}.md"
         if specific_file.exists():
             return specific_file
+        # Pattern 2: "141-Harness架构模型.md" (chapter+L2 combined, e.g., 14+1=141)
+        combined = l1 + l2_num
+        combined_file = l1_dir / f"{combined}-{safe_title}.md"
+        if combined_file.exists():
+            return combined_file
         return readme if readme.exists() else None
 
     else:
@@ -237,11 +243,13 @@ def node_to_path(node_number, title=""):
 
 
 def sanitize_filename(title):
-    """将标题转为安全的文件名片段"""
+    """将标题转为安全的文件名片段。
+    约定：空格移除（不转连字符），仅保留中文/英文/数字/连字符。
+    匹配 topics/ 中的实际命名惯例（如 141-Harness架构模型.md）。"""
     if not title:
         return "untitled"
-    # 保留中文、英文、数字、连字符，移除特殊字符
-    safe = re.sub(r'[^\w一-鿿\-]', '', title.replace(' ', '-').replace('/', '-'))
+    # 移除空格和特殊字符，仅保留中文、英文、数字、连字符
+    safe = re.sub(r'[^\w一-鿿\-]', '', title.replace(' ', '').replace('/', ''))
     return safe[:40] if len(safe) > 40 else safe
 
 
@@ -938,45 +946,57 @@ def generate_summary_md():
     lines = ["# Summary\n"]
     lines.append("[引言](00-引言.md)\n")
 
-    def write_node(node, indent=0):
+    def resolve_path(number, title):
+        """Compute the mdBook file path for a node. Returns path or None."""
+        if not number:
+            return None
+        parts = number.split(".")
+        l1 = parts[0]
+        if l1 not in L1_DIR_MAP:
+            return None
+        l1_dir = L1_DIR_MAP[l1]
+        if len(parts) == 1:
+            return f"{l1_dir}/README.md"
+        else:
+            node_path = node_to_path(number, title)
+            if node_path and node_path.exists():
+                rel = str(node_path.relative_to(ROOT)).replace("\\", "/")
+                if rel.startswith("topics/"):
+                    rel = rel[len("topics/"):]
+                return rel
+            return f"{l1_dir}/README.md"
+
+    def write_node(node, indent=0, parent_path=None):
         prefix = "  " * indent + "- "
         number = node["number"]
         title = node["title"]
         children = node.get("children", [])
 
-        path = None
-        if number:
-            parts = number.split(".")
-            l1 = parts[0]
-            if l1 in L1_DIR_MAP:
-                l1_dir = L1_DIR_MAP[l1]
-                if len(parts) == 1:
-                    # L1: 链接到 README.md
-                    path = f"{l1_dir}/README.md"
-                elif len(parts) >= 2:
-                    # L2+: 链接到 L2 文件或 fallback README
-                    node_path = node_to_path(number, title)
-                    if node_path and node_path.exists():
-                        rel = node_path.relative_to(ROOT)
-                        path = str(rel).replace("\\", "/")
-                        # 在站点 src/ 目录中，文件没有 topics/ 前缀
-                        # topics/XX-名称/README.md → XX-名称/README.md
-                        if path.startswith("topics/"):
-                            path = path[len("topics/"):]
-                    else:
-                        path = f"{l1_dir}/README.md"
-
+        path = resolve_path(number, title)
         if path:
-            # mdBook 需要正斜杠路径
             path = path.replace("\\", "/")
-            # SUMMARY.md 只做文件级导航，不加锚点
-            # （大纲标题与文件内实际标题经常不一致，锚点链接会 404）
+
+        # Filter children: skip those pointing to same file as parent
+        # (e.g., chapters 1-13 have all L2 content in README.md)
+        filtered_children = []
+        for child in children:
+            child_path = resolve_path(child["number"], child["title"])
+            if child_path:
+                child_path = child_path.replace("\\", "/")
+            if child_path and child_path == path:
+                continue  # Same file as parent → skip redundant menu item
+            filtered_children.append(child)
+
+        # mdBook rule: link parent must have link children or no children
+        # If parent has a path and filtered children exist with different paths, keep them
+        # If parent has a path but all children filtered out, don't render children
+        if path:
             lines.append(f"{prefix}[{title}]({path})\n")
         else:
             lines.append(f"{prefix}{title}\n")
 
-        for child in children:
-            write_node(child, indent + 1)
+        for child in filtered_children:
+            write_node(child, indent + 1, parent_path=path)
 
     for root_node in tree:
         # 跳过根节点（整体标题），直接写其子节点（18 个 L1 主题）
