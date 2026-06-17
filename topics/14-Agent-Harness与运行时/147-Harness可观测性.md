@@ -1,4 +1,4 @@
-# 14.7 Harness 的可观测性
+## 14.7 Harness 的可观测性
 
 > Agent行为可观测性在2025-2026年从"事后看Token消耗列表"快速演进为正式的Trace/Log/Metrics三支柱体系。
 

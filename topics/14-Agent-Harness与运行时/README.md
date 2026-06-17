@@ -1,4 +1,4 @@
-# 第十四章：Agent Harness 与运行时基础设施
+## 第十四章：Agent Harness 与运行时基础设施
 
 > **📌 TL;DR — 本章核心发现**
 >
