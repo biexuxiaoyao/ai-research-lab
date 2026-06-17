@@ -1,6 +1,6 @@
 ## 第九章：角色重塑与治理框架
 
-> **📌 TL;DR — 本章核心发现**
+> **📌 TL;DR — 本章核心发现** · ⏱ 17 分钟
 >
 > 1. **Vibe Coding → Agentic Engineering 是不可逆的演化** — Andrej Karpathy 2025 年提出 Vibe Coding，2026 年亲自宣告终结，代之以"Agentic Engineering"：99% 时间编排 Agent，1% 时间做质量裁决
 > 2. **三大治理框架已成型** — Microsoft Agentic-Agile、IBM Agentic Engineering 指南、Shift-Up 框架，共同指向"人类定义约束，AI 在约束内执行"

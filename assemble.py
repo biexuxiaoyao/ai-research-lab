@@ -16,6 +16,7 @@
   python assemble.py site [output_dir]     # 生成 mdBook 文档站（侧边栏+搜索+主题）
   python assemble.py markmap [output.html] # 增强版 markmap（可点击节点+内容预览）
   python assemble.py pdf-help              # 打印 PDF 转换指南（中文 + 锚点）
+  python assemble.py epub [output.epub]     # 生成 ePub 电子书（需要 Pandoc）
   python assemble.py status                # 扫描文件，输出大小/行数/健康度
   python assemble.py suggest-splits        # 识别超阈值文件，建议拆分方案
   python assemble.py index                 # 生成文件路径索引
@@ -1183,6 +1184,121 @@ def show_pdf_help():
     print()
 
 
+def assemble_epub(output_file=None):
+    """
+    生成 ePub 电子书。
+
+    Pandoc 原生支持 ePub 输出，支持：
+    - 元数据（标题/作者/日期/语言）
+    - 按标题层级自动分章（--epub-chapter-level=2）
+    - 内嵌 CSS 样式
+    - 目录（--toc --toc-depth=3）
+    - CJK 字体支持
+    """
+    if output_file is None:
+        output_file = ROOT / "reports" / "研究报告.epub"
+
+    # 先生成 ePub 优化的单文件
+    md_file = ROOT / "reports" / "研究报告-epub.md"
+    files = assemble_full()
+
+    with open(md_file, "w", encoding="utf-8") as out:
+        # ePub YAML 元数据
+        out.write("---\n")
+        out.write("title: 'AI 驱动软件工程范式变革'\n")
+        out.write("subtitle: '从需求到生产的全链路深度分析'\n")
+        out.write("author: 'AI Research Lab'\n")
+        out.write("date: '2026-06-17'\n")
+        out.write("lang: zh-CN\n")
+        out.write("toc: true\n")
+        out.write("toc-depth: 3\n")
+        out.write("---\n\n")
+
+        for f in files:
+            content = f.read_text(encoding="utf-8")
+            # 去除 HTML 注释
+            content = re.sub(r'<!--.*?-->', '', content, flags=re.DOTALL)
+            out.write(content.strip())
+            out.write("\n\n")
+
+    # 检查 pandoc 是否可用
+    import subprocess
+    try:
+        subprocess.run(["pandoc", "--version"], capture_output=True, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("[ERROR] pandoc 未安装。请先安装: https://pandoc.org/installing.html")
+        return None
+
+    # Pandoc ePub 转换
+    css_file = ROOT / "reports" / "epub-style.css"
+    css_file.write_text("""/* ePub CJK 阅读优化 */
+body {
+  font-family: serif;
+  line-height: 1.8;
+  text-align: justify;
+}
+h1, h2, h3, h4 {
+  font-family: sans-serif;
+}
+h1 { font-size: 1.8em; margin-top: 2em; }
+h2 { font-size: 1.4em; margin-top: 1.5em; border-bottom: 1px solid #ccc; }
+h3 { font-size: 1.15em; margin-top: 1.2em; }
+table {
+  font-size: 0.85em;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+th, td {
+  border: 0.5px solid #ddd;
+  padding: 4px 6px;
+}
+th { background-color: #f5f5f5; }
+blockquote {
+  border-left: 3px solid #6a8caf;
+  padding: 0.5em 1em;
+  margin: 0.8em 0;
+  background: #f8f9fa;
+  color: #444;
+}
+code { font-size: 0.9em; background: #f0f0f0; padding: 1px 3px; }
+pre { font-size: 0.8em; background: #f5f5f5; padding: 8px; overflow-x: auto; }
+""", encoding="utf-8")
+
+    cmd = [
+        "pandoc", str(md_file),
+        "--from", "markdown+smart",
+        "--to", "epub3",
+        "--output", str(output_file),
+        "--epub-chapter-level=2",
+        "--toc", "--toc-depth=3",
+        "--css", str(css_file),
+    ]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode == 0:
+        size_kb = Path(output_file).stat().st_size / 1024
+        print(f"✅ ePub 已生成: {output_file} ({size_kb:.0f} KB)")
+        print()
+        print("📖 阅读器推荐：")
+        print("   Windows: Calibre / Edge / Thorium Reader")
+        print("   macOS:   Apple Books")
+        print("   iOS:     Apple Books")
+        print("   Android: Moon+ Reader / Google Play Books")
+        print("   Kindle:  先转换为 MOBI（Calibre 或 Kindle Previewer）")
+        print()
+        print("📱 发送到 Kindle：")
+        print("   使用 Amazon Send-to-Kindle 服务，支持 ePub 直接上传")
+    else:
+        print(f"[ERROR] Pandoc 转换失败:\n{result.stderr}")
+
+    # 清理临时文件
+    css_file.unlink(missing_ok=True)
+    md_file.unlink(missing_ok=True)
+
+    return output_file
+
+
 # ============================================================
 # 第 6 部分：反向链接生成
 # ============================================================
@@ -1378,6 +1494,10 @@ def main():
 
     elif mode == "pdf-help":
         show_pdf_help()
+
+    elif mode == "epub":
+        output = sys.argv[2] if len(sys.argv) > 2 else None
+        assemble_epub(output)
 
     elif mode == "backlinks":
         inject = "--inject" in sys.argv

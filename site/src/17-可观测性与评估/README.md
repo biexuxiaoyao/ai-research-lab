@@ -1,6 +1,6 @@
 ## 第十七章：可观测性与评估基础设施
 
-> **📌 TL;DR — 本章核心发现**
+> **📌 TL;DR — 本章核心发现** · ⏱ 3 分钟
 >
 > 1. **Agent 可观测性需要新三支柱** — 传统 Trace/Log/Metrics 不足以覆盖 Agent 行为，需要增加：推理链追踪（Chain-of-Thought Trace）、工具调用审计（Tool Call Audit）、幻觉检测（Hallucination Detection）
 > 2. **LLM-as-Judge 是评估的支柱但有盲区** — 用 LLM 评估 LLM 输出存在自我偏好偏差，需要多模型交叉验证 + 人工抽样校准

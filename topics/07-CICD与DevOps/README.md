@@ -1,6 +1,6 @@
 ## 第七章：CI/CD 与 DevOps 的 AI 化
 
-> **📌 TL;DR — 本章核心发现**
+> **📌 TL;DR — 本章核心发现** · ⏱ 21 分钟
 >
 > 1. **PR 暴增危机是 AI 编码的直接后果** — AI 使每开发者 PR 产出可达 5 倍+，但人类 Code Review 吞吐量不变，PR 审查中位时间攀升 400%+
 > 2. **AI Code Review 已形成四大阵营** — CodeRabbit（200 万+ 仓库）、Qodo（蓝队/红队模型）、GitHub Copilot Code Review、Amazon Q Developer，人工 Review 正在从"代码是否正确"提升为"架构决策是否合理"
