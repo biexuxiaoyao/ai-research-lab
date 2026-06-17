@@ -44,7 +44,7 @@ flowchart LR
     Before -->|"价值转移"| After
     style Before fill:#fce4ec
     style After fill:#e8f5e9
-```
+```mermaid
 
 1. **从实现到约束**：工作从"写代码实现功能"变为"定义约束确保正确性"。哪些数据验证规则不可违反？哪些并发语义必须保证？Agent 无法从训练数据中推断这些。
 

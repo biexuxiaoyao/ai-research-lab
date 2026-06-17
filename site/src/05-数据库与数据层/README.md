@@ -124,9 +124,9 @@ DBA 正从"数据库管理员"进化为"数据架构师 + AI 治理者"。AI 可
 
 **生产 RAG 的两阶段检索模式**：
 
-```
+```text
 Query → Embed → Vector Search (pgvector) → Rerank (Cohere/Cross-encoder) → LLM → Grounded Answer
-```
+```text
 
 原因：语义邻近 ≠ 事实相关。一个文档在向量空间中"近"但不一定回答你的问题。Reranker 处理 query+document 一起评分来弥补这个 Gap。
 

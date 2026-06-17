@@ -37,7 +37,7 @@ flowchart TB
     style B3 fill:#ffdddd
     style B4 fill:#ffdddd
     style A1 fill:#ccffcc
-```
+```mermaid
 
 
 
@@ -138,7 +138,7 @@ AI生成代码可以同时生成通过测试的代码——但通过率不反映
 
 建议采用**三层异构验证架构**：
 
-```
+```text
 Layer 1: 生成层（Generation Layer）
     - 主力模型（如Claude或Gemini）生成代码
     - 不同的代码模块可使用不同的模型
@@ -155,7 +155,7 @@ Layer 3: 自动化检查层（Automated Gate Layer）
     - 突变测试（MUTGEN/PITest）
     - AI-SBOM完整性检查（FORGE CLI/CycloneDX）
     - 架构一致性自动化检查
-```
+```text
 
 ### 模型版本切换的正确性回归风险评估
 
@@ -410,6 +410,7 @@ SmartBear在2025年10月的分析揭示了一个关键的不对称性：**编码
 - **08 生产运维** — "自动化悖论"是"速度 vs 质量悖论"在运维领域的实例
 - **09 角色重塑** — "代码贬值，判断升值"经济学是本章"资源配置"分析的基础
 - **14 Agent-Harness** — Agent 指令文件成为基础设施（12.4）与 Harness 架构直接相关
+- **17 可观测性** — 12.2 信号体系崩溃与重建（覆盖率贬值→突变测试、PR 速度→生产对齐度）是第 17 章可观测性新范式的横切理论基础：五大传统信号贬值与五大新信号度量方法论
 - **18 提示工程** — "Vibe Architecting"（18.6）是速度挤压质量的具体机制
 
 ---

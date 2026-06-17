@@ -32,7 +32,7 @@
   ├── 流式输出清洗
   ├── 护栏模型 (InjecGuard)
   └── 语义意图不变量检测 (PromptSleuth)
-```
+```text
 
 ### 各层具体方案与数据
 
@@ -147,13 +147,13 @@ PromptKeeper将现有防御归为三类，各有局限：
 
 ```text
 hash(user_id + scene) % 100 < traffic_b_percent → treatment, else → control
-```
+```text
 
 **推荐渐进式推出层级**:
 
 ```text
 5% → 观察数小时/天 → 20% → 全量切换
-```
+```text
 
 **指标体系 — "北极星 + 护栏"**:
 
@@ -197,7 +197,7 @@ hash(user_id + scene) % 100 < traffic_b_percent → treatment, else → control
 渐进提升 (20% → 50% → 100%，每步指标门控)
     ↓
 全量生产 (持续监控，version标签: production)
-```
+```text
 
 **晋升即标签重分配**: 将一个版本从`development`重新标记到`staging`→`production`，通过门控检查后执行。
 
@@ -211,7 +211,7 @@ hash(user_id + scene) % 100 < traffic_b_percent → treatment, else → control
   input_payload, output_payload
   latency_ms, prompt_tokens, completion_tokens
   biz_feedback (manual_correction, user_complaint)
-```
+```yaml
 
 ### 工具生态
 

@@ -18,7 +18,7 @@
 编码实现（代码承载了思考路径）             代码只承载结果
     ↓
 后人可追溯、可质疑、可演进
-```
+```text
 
 AI 代码天然缺失一整层信息：**为什么这样写**。代码能跑，但团队积累的是"知识债务"——组织内没有人能捍卫或演进它。
 
@@ -76,7 +76,7 @@ arXiv 2604.16323（Casserini et al., 2026, CHI Workshop）提出 Agentic Entropy
             → AI 写设计文档 → 人确认方案
             → AI 写任务列表 → 人确认步骤
             → AI 逐任务实现 → 每步可验证
-```
+```text
 
 **已落地工具**：Claude Code Plan Mode、Cursor Plan Mode、Amazon Kiro 三阶段、Devin 2.0、JetBrains Junie——均强制或强烈建议 "先计划、再执行"。
 
@@ -104,7 +104,7 @@ L2 — 设计门禁（Design Gate）
   
 L3 — 审查门禁（Review Gate）
   PR 提交前 → 自动检查是否缺少 DESIGN.md 更新
-```
+```text
 
 **实测数据**（⚠️ 社区 312+ 任务实测，非系统性研究）：
 
@@ -121,7 +121,7 @@ L3 — 审查门禁（Review Gate）
 AGENTS.md   → 怎么做事（操作层面：build、test、lint、commit）
 CLAUDE.md   → 行为边界（约束层面：不能做什么、架构红线）
 DESIGN.md   → 为什么这样设计（意图层面：方案选择、拒绝的替代方案、权衡）
-```
+```text
 
 **ADR 格式**：选择什么 + 考虑过但拒绝什么 + 权衡是什么 + 约束条件。修改已有代码前先读 DESIGN.md 中的相关决策；如果认为某决策不再适用，新增一条决策记录说明变更理由，不得直接修改原有决策。
 

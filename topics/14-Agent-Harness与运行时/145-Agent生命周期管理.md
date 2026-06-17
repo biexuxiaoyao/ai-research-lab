@@ -29,7 +29,7 @@ flowchart LR
     style COMPLETED fill:#e8f5e9
     style FAILED fill:#fce4ec
     style TIMED_OUT fill:#fff3e0
-```
+```mermaid
 
 ### 各框架的状态机对比
 
@@ -95,7 +95,7 @@ flowchart TB
     style Normal fill:#e8f5e9
     style Crash fill:#fce4ec
     style DB fill:#e3f2fd
-```
+```mermaid
 
 **四项核心机制**：
 

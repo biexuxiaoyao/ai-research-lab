@@ -74,7 +74,7 @@ Planner/Orchestrator
         └── Worker B2
             ↓
         Reviewer (可选的质量把关层)
-```
+```text
 
 | 维度 | 特征 |
 |------|------|
@@ -184,7 +184,7 @@ while not task_finished:
     action = executor.run(plan)
     feedback = env.evaluate(action)
     memory.store(plan, action, feedback)
-```
+```python
 
 关键组件：Memory（上下文+任务存储）、Planner（决策+任务分解）、Executor（工具执行+代码运行）、Feedback Loop（错误检测+自我修正）。**DeepWiki**是Devin的核心创新——从代码库提取概念，构建基于图的表示（文件=节点，关系=边），使Agent能"一眼"理解架构结构[8]。
 
@@ -682,11 +682,11 @@ arXiv论文（2603.18096）提出**Message-Action Trace（MAT）框架**[24]：
 
 社区公认的最佳实践[24]：将系统分为三个圈层，逐层处理：
 
-```
+```text
 外部圈（不可控）
     → 中层（LLM——非确定性）
         → 内核（确定性代码——100%可测试）
-```
+```text
 
 - **内核层**：所有Agent调度、消息路由、状态机转换、Schema验证、护栏逻辑——传统单元测试覆盖
 - **LLM层**：使用Snapshot录制和语义漂移检测，而非Exact Match

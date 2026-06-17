@@ -62,7 +62,7 @@ flowchart TB
     end
     style Vicious fill:#fce4ec
     style Virtuous fill:#e8f5e9
-```
+```mermaid
 
 **打破环形验证的技术手段**：
 

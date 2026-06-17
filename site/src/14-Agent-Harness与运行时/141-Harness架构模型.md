@@ -28,7 +28,7 @@ flowchart TB
     style CLI fill:#e8f0fe
     style IDE fill:#e8f5e9
     style Cloud fill:#fff3e0
-```
+```mermaid
 
 ### CLI 原生型：while-loop + 确定性基础设施
 
@@ -47,7 +47,7 @@ queryLoop() {
     }
   }
 }
-```
+```javascript
 
 VILA-Lab 对约 51.2 万行 TypeScript 源码的逆向分析揭示了一个关键发现：**仅 1.6% 的代码是 AI 决策逻辑，其余 98.4% 是确定性基础设施**——权限门控、上下文管理、工具路由、崩溃恢复和 Compaction 逻辑。这意味着 Harness 的可靠性不取决于模型，而取决于这 98.4% 的工程质量。
 
@@ -116,7 +116,7 @@ flowchart LR
     style L3 fill:#fce4ec
     style L4 fill:#e8f5e9
     style L5 fill:#f3e5f5
-```
+```mermaid
 
 ### ① 工具层 — Agent 的"手"
 

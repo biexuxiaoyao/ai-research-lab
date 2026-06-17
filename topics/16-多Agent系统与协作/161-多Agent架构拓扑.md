@@ -20,7 +20,7 @@ Planner/Orchestrator
         └── Worker B2
             ↓
         Reviewer (可选的质量把关层)
-```
+```text
 
 | 维度 | 特征 |
 |------|------|
@@ -130,7 +130,7 @@ while not task_finished:
     action = executor.run(plan)
     feedback = env.evaluate(action)
     memory.store(plan, action, feedback)
-```
+```python
 
 关键组件：Memory（上下文+任务存储）、Planner（决策+任务分解）、Executor（工具执行+代码运行）、Feedback Loop（错误检测+自我修正）。**DeepWiki**是Devin的核心创新——从代码库提取概念，构建基于图的表示（文件=节点，关系=边），使Agent能"一眼"理解架构结构[8]。
 

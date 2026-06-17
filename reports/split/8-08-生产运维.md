@@ -39,7 +39,7 @@ flowchart LR
     style C fill:#ffffcc
     style D fill:#ffcccc
     style F fill:#ccffcc
-```
+```mermaid
 
 **收益**：
 

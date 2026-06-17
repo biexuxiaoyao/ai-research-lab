@@ -33,7 +33,7 @@ flowchart LR
     style B fill:#ffffcc
     style C fill:#cce5ff
     style D fill:#ccffcc
-```
+```mermaid
 
 **SDD vs 传统 PRD 的根本差异**：
 
@@ -83,10 +83,10 @@ flowchart LR
 
 核心因果机制可概括为一条加速反馈回路：
 
-```
+```text
 模糊的 PRD → 人类开发者 → 主动澄清 → 单点错误（影响可控）
 模糊的 PRD → AI Agent     → 不澄清（沉默失败）→ 规模化错误（影响爆炸）
-```
+```text
 
 **Mass Technology Leadership Council** 给出了最精炼的表述：
 
