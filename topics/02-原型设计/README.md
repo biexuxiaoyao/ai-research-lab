@@ -1,5 +1,5 @@
 ---
-title: "原型与设计的AI化"
+title: "第二章：原型与设计的 AI 化"
 date: "2026-06-18"
 lang: zh-CN
 ---

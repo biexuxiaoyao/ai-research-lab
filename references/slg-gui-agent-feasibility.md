@@ -1,5 +1,5 @@
 ---
-title: "探索：SLG GUI Agent 的可行性与技术路线"
+title: "一、UI-TARS-2 分析"
 date: "2026-06-18"
 lang: zh-CN
 ---

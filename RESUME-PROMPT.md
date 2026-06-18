@@ -1,3 +1,9 @@
+---
+title: "项目位置"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # 会话恢复提示词
 
 > 直接复制全文，粘贴给 Claude Code 新会话。
@@ -8,9 +14,9 @@
 
 ## 项目位置
 
-```
+```text
 C:\Users\25220\Projects\ai-research-lab\
-```
+```text
 
 关键文件：
 

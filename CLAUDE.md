@@ -1,5 +1,5 @@
 ---
-title: "AI Research Lab — AI 驱动软件工程范式变革研究"
+title: "项目定位"
 date: "2026-06-18"
 lang: zh-CN
 ---

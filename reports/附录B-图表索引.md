@@ -1,5 +1,5 @@
 ---
-title: "附录B：图表索引"
+title: "图表索引 (Chart Index)"
 date: "2026-06-18"
 lang: zh-CN
 ---

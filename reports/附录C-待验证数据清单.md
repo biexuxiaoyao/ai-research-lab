@@ -1,5 +1,5 @@
 ---
-title: "附录C：待验证数据清单"
+title: "待验证数据清单 (Data Verification Inventory)"
 date: "2026-06-18"
 lang: zh-CN
 ---

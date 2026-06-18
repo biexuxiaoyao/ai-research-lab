@@ -1,5 +1,5 @@
 ---
-title: "Markdown工程化——AI时代的文档基础设施"
+title: "第十三章：Markdown 工程化 — AI 时代的文档基础设施"
 date: "2026-06-18"
 lang: zh-CN
 ---

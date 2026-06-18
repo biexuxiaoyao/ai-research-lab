@@ -1,5 +1,5 @@
 ---
-title: "Agent-Harness与运行时（子章节）"
+title: "14.7 Harness 的可观测性"
 date: "2026-06-18"
 lang: zh-CN
 ---

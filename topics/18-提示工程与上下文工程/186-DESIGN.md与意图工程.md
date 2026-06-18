@@ -1,5 +1,5 @@
 ---
-title: "提示工程与上下文工程（子章节）"
+title: "18.6 DESIGN.md 与意图工程"
 date: "2026-06-18"
 lang: zh-CN
 ---

@@ -1,5 +1,5 @@
 ---
-title: "多Agent系统与协作（子章节）"
+title: "16.2 多 Agent 通信与协调"
 date: "2026-06-18"
 lang: zh-CN
 ---

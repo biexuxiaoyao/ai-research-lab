@@ -1,5 +1,5 @@
 ---
-title: "CI/CD与DevOps的AI化"
+title: "第七章：CI/CD 与 DevOps 的 AI 化"
 date: "2026-06-18"
 lang: zh-CN
 ---

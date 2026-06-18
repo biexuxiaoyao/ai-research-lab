@@ -1,5 +1,5 @@
 ---
-title: "多Agent系统与协作"
+title: "第十六章：多 Agent 系统与协作模式"
 date: "2026-06-18"
 lang: zh-CN
 ---

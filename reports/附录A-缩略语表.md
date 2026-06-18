@@ -1,5 +1,5 @@
 ---
-title: "附录A：缩略语表"
+title: "缩略语表 (Abbreviations)"
 date: "2026-06-18"
 lang: zh-CN
 ---
