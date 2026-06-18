@@ -1,0 +1,36 @@
+# MD013: line length - relaxed for Chinese text
+MD013:
+  line_length: 300
+  code_blocks: false
+  tables: false
+  headings: false
+
+# MD024: multiple headings with same content - allowed for chapter structure
+MD024:
+  siblings_only: true
+
+# MD033: inline HTML - allowed for Mermaid and special formatting
+MD033: false
+
+# MD041: first line heading - not required for topic fragments
+MD041: false
+
+# MD046: code block style - fenced only
+MD046:
+  style: fenced
+
+# MD048: code fence style - backtick only
+MD048:
+  style: backtick
+
+# MD049: emphasis style - allow asterisk (standard for Chinese Markdown)
+MD049: false
+
+# MD026: trailing punctuation in headings - allow (Chinese headings use ？)
+MD026: false
+
+# MD022: blanks around headings - allow compact headings in appendix
+MD022: false
+
+# MD032: blanks around lists - relaxed for checklists
+MD032: false

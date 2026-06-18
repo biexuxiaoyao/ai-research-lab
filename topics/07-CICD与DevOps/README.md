@@ -13,7 +13,7 @@
 
 | 工具 | 规模 | 核心架构 |
 |------|------|----------|
-| **CodeRabbit** | 200万+ 仓库，1300万+ PR，15,000+ 团队 | 沙盒化审查，40+ Linter + SAST |
+| **CodeRabbit** | 200 万+ 仓库，1300 万+ PR，15,000+ 团队 | 沙盒化审查，40+ Linter + SAST |
 | **Qodo** | 企业级 | 蓝队/红队模型，代码库嵌入模型 |
 | **GitHub Copilot Code Review** | GitHub 原生 | IDE 集成，PR 内审查 |
 | **Amazon Q Developer** | AWS 生态 | 安全扫描 + 代码审查一体化 |
@@ -157,48 +157,48 @@ Agent 时代的 Git 两个根本痛点：① commit/PR 语义在 AI 以百倍速
 
 一个反直觉的发现正在浮现：AI 生成的代码量激增（+180% commits），但下游瓶颈（审查、测试、合规）并未同步加速，导致端到端发布速度可能反而不如手动编码时代。CircleCI 2026 数据显示 CI 成功率降至 70.8%（五年最低），PR 审查中位时间增加 400%。AlixPartners 将此称为"AI 生产力悖论"——个人速度提升未转化为组织吞吐量。解药不是"更快的 CI"或"更多的并行 Agent"，而是重新设计整个交付流程以适应 AI 时代的代码供给速度：AI 辅助审查、灰盒验证、和 Spec 驱动的质量门禁。
 
-### 7.7 CI/CD安全风险
+### 7.7 CI/CD 安全风险
 
-**AI来源CVE的CI检测管线设计**
+**AI 来源 CVE 的 CI 检测管线设计**
 
-2026年Q1已被记录的56个AI相关CVE推动了一个专门的检测工具生态成型。Georgia Tech的**Vibe Security Radar**项目采用SZZ算法进行Git blame追溯，识别15+种AI编码工具的提交签名（co-author trailer、bot email、提交消息标记），结合LLM调查Agent验证因果关系——回答"AI编写的代码是否导致了该漏洞？"，追踪时间线从2025年5月起。
+2026 年 Q1 已被记录的 56 个 AI 相关 CVE 推动了一个专门的检测工具生态成型。Georgia Tech 的**Vibe Security Radar**项目采用 SZZ 算法进行 Git blame 追溯，识别 15+种 AI 编码工具的提交签名（co-author trailer、bot email、提交消息标记），结合 LLM 调查 Agent 验证因果关系——回答"AI 编写的代码是否导致了该漏洞？"，追踪时间线从 2025 年 5 月起。
 
-CI/CD管线集成层已形成MCP原生扫描架构：
+CI/CD 管线集成层已形成 MCP 原生扫描架构：
 
 | 工具 | 关键能力 |
 |------|---------|
-| **GitLab 18.11 Agentic SAST** (2026年4月GA) | SAST扫描完成后AI Agent分析确认的真阳性，生成修复根因的代码MR，附带置信度评分 |
-| ⚠️ GuardVibe（待验证） | 声称335条安全规则+36个MCP工具，检测Hook注入和凭据泄露等 |
-| **Ship-Safe** | 23个并行安全Agent，含LLMRedTeam、MCPSecurityAgent、CICDScanner（OWASP CI/CD Top 10）、AgentAttestationAgent（SLSA L0检测） |
-| **aiguard-scan** | 按`--ai-only`模式仅扫描AI生成代码，通过提交元数据识别来源工具 |
-| **agent-bom** | AI供应链安全扫描器，跟踪CVE→包→MCP服务器→Agent→凭证→工具的爆炸半径 |
+| **GitLab 18.11 Agentic SAST** (2026 年 4 月 GA) | SAST 扫描完成后 AI Agent 分析确认的真阳性，生成修复根因的代码 MR，附带置信度评分 |
+| ⚠️ GuardVibe（待验证） | 声称 335 条安全规则+36 个 MCP 工具，检测 Hook 注入和凭据泄露等 |
+| **Ship-Safe** | 23 个并行安全 Agent，含 LLMRedTeam、MCPSecurityAgent、CICDScanner（OWASP CI/CD Top 10）、AgentAttestationAgent（SLSA L0 检测） |
+| **aiguard-scan** | 按`--ai-only`模式仅扫描 AI 生成代码，通过提交元数据识别来源工具 |
+| **agent-bom** | AI 供应链安全扫描器，跟踪 CVE→包→MCP 服务器→Agent→凭证→工具的爆炸半径 |
 
-关键技术架构转变：MCP协议使GuardVibe、argus-ci等工具直接嵌入Claude Code、Cursor、Gemini CLI和Codex，实现**代码生成时实时扫描→自动修复反馈回路（fix_code→Agent应用补丁→verify_fix确认）→预提交阻断→CI/CD SARIF导出**的全链路闭环。
+关键技术架构转变：MCP 协议使 GuardVibe、argus-ci 等工具直接嵌入 Claude Code、Cursor、Gemini CLI 和 Codex，实现**代码生成时实时扫描→自动修复反馈回路（fix_code→Agent 应用补丁→verify_fix 确认）→预提交阻断→CI/CD SARIF 导出**的全链路闭环。
 
-**Prompt Injection的CI传播路径**
+**Prompt Injection 的 CI 传播路径**
 
-2025年12月，Aikido Security发现的**PromptPwnd**攻击类揭示了Prompt Injection作为CI/CD攻击向量的完整路径：（1）攻击者将恶意指令隐藏在issue标题、PR描述、提交消息或代码注释中——使用HTML注释、不可见Unicode或人类不易察觉的Markdown；（2）这些内容通过`${{ github.event.issue.body }}`无净化地注入AI提示；（3）LLM将恶意文本视为合法指令执行；（4）Agent调用`gh issue edit`或shell命令，将`$GEMINI_API_KEY`和`$GITHUB_TOKEN`等机密写入公开issue线程。**Google Gemini CLI自身仓库也被证实受此影响**（4天内修复）。至少5家Fortune 500公司确认受影响。
+2025 年 12 月，Aikido Security 发现的**PromptPwnd**攻击类揭示了 Prompt Injection 作为 CI/CD 攻击向量的完整路径：（1）攻击者将恶意指令隐藏在 issue 标题、PR 描述、提交消息或代码注释中——使用 HTML 注释、不可见 Unicode 或人类不易察觉的 Markdown；（2）这些内容通过`${{ github.event.issue.body }}`无净化地注入 AI 提示；（3）LLM 将恶意文本视为合法指令执行；（4）Agent 调用`gh issue edit`或 shell 命令，将`$GEMINI_API_KEY`和`$GITHUB_TOKEN`等机密写入公开 issue 线程。**Google Gemini CLI 自身仓库也被证实受此影响**（4 天内修复）。至少 5 家 Fortune 500 公司确认受影响。
 
-> ⚠️ **审计注**：以下安全事件描述中的具体CVE编号、攻击活动名称和受影响数量在独立审计中无法验证。Prompt Injection 作为 CI/CD 攻击向量的概念性风险是真实存在的，但具体事件声称需要独立核实。保留攻击路径的技术描述框架供参考。
+> ⚠️ **审计注**：以下安全事件描述中的具体 CVE 编号、攻击活动名称和受影响数量在独立审计中无法验证。Prompt Injection 作为 CI/CD 攻击向量的概念性风险是真实存在的，但具体事件声称需要独立核实。保留攻击路径的技术描述框架供参考。
 
-**Agent引入恶意依赖的供应链攻击检测**
+**Agent 引入恶意依赖的供应链攻击检测**
 
-2025年仅npm就发布了454,648个恶意包（Sonatype统计），跨npm/PyPI/Maven Central总计845,000+新恶意包，同比增长188%。AI Agent以人类无法企及的速度执行`pip install`/`npm install`，且常在CI环境中拥有广泛密钥访问权限，放大了风险。
+2025 年仅 npm 就发布了 454,648 个恶意包（Sonatype 统计），跨 npm/PyPI/Maven Central 总计 845,000+新恶意包，同比增长 188%。AI Agent 以人类无法企及的速度执行`pip install`/`npm install`，且常在 CI 环境中拥有广泛密钥访问权限，放大了风险。
 
-2025-2026年关键事件链：2025年9月`debug`和`chalk`（npm）维护者被钓鱼，恶意版本存活约2小时影响数十亿下载；2026年3月`litellm`（PyPI）1.82.7/1.82.8版由TeamPCP发布，收割云凭证/API密钥/CI/CD密钥；2026年1-3月Glassworm活动同时攻击OpenVSX、VS Code Marketplace、npm和PyPI，使用Solana区块链作为C2；ClawHavoc活动在OpenClaw Agent技能市场投放1,200+恶意技能。
+2025-2026 年关键事件链：2025 年 9 月`debug`和`chalk`（npm）维护者被钓鱼，恶意版本存活约 2 小时影响数十亿下载；2026 年 3 月`litellm`（PyPI）1.82.7/1.82.8 版由 TeamPCP 发布，收割云凭证/API 密钥/CI/CD 密钥；2026 年 1-3 月 Glassworm 活动同时攻击 OpenVSX、VS Code Marketplace、npm 和 PyPI，使用 Solana 区块链作为 C2；ClawHavoc 活动在 OpenClaw Agent 技能市场投放 1,200+恶意技能。
 
 检测工具矩阵：
 
 | 工具 | 核心机制 | 覆盖范围 |
 |------|---------|---------|
-| **MagiSentry** | 10步流水线（注册表元数据→OSV.dev→递归依赖审计→隔离下载→VirusTotal→Magika文件类型→Semgrep→YARA） | pip/npm/code/vscode/docker |
-| **patient-zero** | 沙箱依赖树解析+IoC数据库（每小时更新）+MCP配置扫描 | 6+命名攻击活动追踪 |
-| **SkillScan Security** | 70+静态规则+15条链式规则+163域名/1310 IP IoC+离线DeBERTa ML | AI技能/MCP工具 |
-| **ClawMoat** | 多层提示注入检测+30+凭证模式+危险命令检测，40/40检测零误报 | OWASP Top 10 for Agentic AI全覆盖 |
-| **Snyk Agent Scan** | 分析3,984个技能，发现76个确认恶意技能（13.4%含严重问题） | URL/GitHub/拖放扫描 |
-| **ShieldNet** (arXiv 2604.04426) | 网络层MITM代理，SC-Inject-Bench 10,000+恶意MCP工具，F1=0.995，误报率0.8% | 25+攻击类型MITRE ATT&CK映射 |
+| **MagiSentry** | 10 步流水线（注册表元数据→OSV.dev→递归依赖审计→隔离下载→VirusTotal→Magika 文件类型→Semgrep→YARA） | pip/npm/code/vscode/docker |
+| **patient-zero** | 沙箱依赖树解析+IoC 数据库（每小时更新）+MCP 配置扫描 | 6+命名攻击活动追踪 |
+| **SkillScan Security** | 70+静态规则+15 条链式规则+163 域名/1310 IP IoC+离线 DeBERTa ML | AI 技能/MCP 工具 |
+| **ClawMoat** | 多层提示注入检测+30+凭证模式+危险命令检测，40/40 检测零误报 | OWASP Top 10 for Agentic AI 全覆盖 |
+| **Snyk Agent Scan** | 分析 3,984 个技能，发现 76 个确认恶意技能（13.4%含严重问题） | URL/GitHub/拖放扫描 |
+| **ShieldNet** (arXiv 2604.04426) | 网络层 MITM 代理，SC-Inject-Bench 10,000+恶意 MCP 工具，F1=0.995，误报率 0.8% | 25+攻击类型 MITRE ATT&CK 映射 |
 
-防御纵深共识：安装前扫描→MCP/技能配置审计→运行时网络层拦截→CI/CD SARIF集成→开源高频更新IoC数据库。
+防御纵深共识：安装前扫描→MCP/技能配置审计→运行时网络层拦截→CI/CD SARIF 集成→开源高频更新 IoC 数据库。
 
 ---
 

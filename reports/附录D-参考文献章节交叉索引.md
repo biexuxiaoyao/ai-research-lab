@@ -14,7 +14,7 @@
 | R6 | Gartner AI SRE Market Guide (2026) | Ch08 生产运维 |
 | R7 | Forrester TEI of Figma Dev Mode (2025) | Ch02 原型设计 |
 | R8 | Sonatype Software Supply Chain (Q2 2025) | Ch10 安全工程 |
-| R9 | Veracode GenAI Code Security Report (2025) | Ch04 后端、Ch06 测试与QA、Ch10 安全工程 |
+| R9 | Veracode GenAI Code Security Report (2025) | Ch04 后端、Ch06 测试与 QA、Ch10 安全工程 |
 | R10 | Veracode State of Software Security (2025) | Ch10 安全工程 |
 | R11 | ReversingLabs Supply Chain Security (2025) | Ch10 安全工程 |
 | R12 | AlixPartners Enterprise Software Predictions (2026) ⚠️ | Ch07 CI/CD |
@@ -35,7 +35,7 @@
 |------|------|----------|
 | A1 | CMU Over-Specification (2025) ⚠️ | Ch01 需求工程 |
 | A2 | MIT/Wharton/NBER Working Paper 35275 (2026) | Ch12 横切主题、Ch09 角色重塑 |
-| A3 | arXiv:2603.25773 "Specification as Quality Gate" (2026) | Ch06 测试与QA |
+| A3 | arXiv:2603.25773 "Specification as Quality Gate" (2026) | Ch06 测试与 QA |
 | A4 | arXiv:2512.06046 "AI4UI Benchmark" (2025) | Ch02 原型设计 |
 | A5 | arXiv:2605.03275 "RAG Failure Modes" (2026) | Ch05 数据库 |
 | A6 | arXiv:2606.03145 "Schema Transformations" (2026) | Ch05 数据库 |
@@ -48,7 +48,7 @@
 | A13 | arXiv SDD Six-Dimensional Framework (2026.6) | Ch01 需求工程 |
 | A14 | HICSS "GenAI in RE" (2026) ⚠️ | Ch01 需求工程 |
 | A15 | ISE "AI Adoption in RE" (2025) ⚠️ | Ch01 需求工程 |
-| A16 | IEEE "DDD-Enforcer" (2026) | Ch04 后端与API |
+| A16 | IEEE "DDD-Enforcer" (2026) | Ch04 后端与 API |
 | A17 | arXiv ASE-26 Curriculum (2026.5) | Ch09 角色重塑、B.2 教育 |
 | A18 | arXiv PII Leakage Causal Model (2025) | Ch11 法律合规 |
 | A19 | ICPEC AI Code Provenance (2025) | Ch11 法律合规 |
@@ -64,10 +64,10 @@
 | P4 | LangChain "PRD is Dead" (2026) | Ch01 需求工程 |
 | P5 | LangChain "Traces, Not Code" (2026) | Ch18 提示工程、Ch17 可观测性 |
 | P6 | Sentry AI Autofix (2026) | Ch08 生产运维 |
-| P7 | CodeRabbit AI Code Review (2026) | Ch07 CI/CD、Ch06 测试与QA |
+| P7 | CodeRabbit AI Code Review (2026) | Ch07 CI/CD、Ch06 测试与 QA |
 | P8 | Figma Make + GitHub Integration (2025-2026) | Ch02 原型设计 |
 | P9 | Builder.io "No Handoff Methodology" (2025) | Ch02 原型设计 |
-| P10 | Google Cloud Next (2026) | Ch04 后端与API |
+| P10 | Google Cloud Next (2026) | Ch04 后端与 API |
 | P11 | PagerDuty AI Operations (2026) | Ch08 生产运维 |
 | P12 | LogicMonitor Edwin AI (2026) | Ch08 生产运维 |
 
@@ -91,10 +91,10 @@
 |------|------|----------|
 | E1 | Spotify KubeCon EU (2026) | Ch07 CI/CD |
 | E2 | Dropbox KubeCon EU (2026) | Ch08 生产运维 |
-| E3 | Stripe AI PR Data (2026) | Ch04 后端与API、Ch07 CI/CD |
+| E3 | Stripe AI PR Data (2026) | Ch04 后端与 API、Ch07 CI/CD |
 | E4 | 民生银行 SDD 实验 (2025) 🔍 | Ch01 需求工程 |
 | E5 | SNCF Connect & Tech SDD (2026.2) 🔍 | Ch01 需求工程 |
-| E6 | Infosys Agentic AI Report (2025) | Ch04 后端与API |
+| E6 | Infosys Agentic AI Report (2025) | Ch04 后端与 API |
 | E7 | FinOps X AI Token Dynamics (2026) | Ch17 可观测性 |
 | E8 | Gravitee 2026 Survey (KubeCon EU) | Ch08 生产运维 |
 
@@ -103,7 +103,7 @@
 | 编号 | 来源 | 引用章节 |
 |------|------|----------|
 | L1 | EU AI Act (Regulation 2024/1689) | Ch11 法律合规、Ch10 安全工程、A.3 法律伦理 |
-| L2 | 中国《生成式AI服务管理暂行办法》(2023) | Ch11 法律合规 |
+| L2 | 中国《生成式 AI 服务管理暂行办法》(2023) | Ch11 法律合规 |
 | L3 | OWASP Top 10 for LLM Applications (2025) | Ch10 安全工程 |
 | L4 | OWASP Top 10 for Agentic AI (2025) | Ch10 安全工程 |
 | L5 | OWASP CI/CD Top 10 | Ch07 CI/CD、Ch10 安全工程 |
@@ -124,7 +124,7 @@
 | O3 | Langfuse | Ch17 可观测性 |
 | O4 | Promptfoo | Ch17 可观测性 |
 | O5 | Braintrust | Ch17 可观测性、Ch15 模型选型 |
-| O6 | DDD-Enforcer (IEEE 2026) | Ch04 后端与API |
+| O6 | DDD-Enforcer (IEEE 2026) | Ch04 后端与 API |
 | O7 | jj/Jujutsu (Google) | Ch07 CI/CD |
 | O8 | Sapling (Meta) | Ch07 CI/CD |
 | O9 | SKILLJECT (2026) | Ch10 安全工程 |
@@ -134,7 +134,7 @@
 | D3 | ALCE Benchmark (C²-Cite) | Ch11 法律合规 |
 | D4 | VLAIR Benchmark (Counsel Stack) | 外部评估-引用工具指南 |
 | D5 | SC-Inject-Bench (arXiv 2604.04426) | Ch10 安全工程 |
-| D6 | SWE-bench (2024-2026) | Ch15 模型选型、Ch16 多Agent |
+| D6 | SWE-bench (2024-2026) | Ch15 模型选型、Ch16 多 Agent |
 
 ---
 
@@ -149,7 +149,7 @@
 | 企业实践 | 8 | 5 个章节 |
 | 法规标准 | 12 | 4 个章节 |
 | 开源项目 | 16 | 7 个章节 |
-| **合计** | **99** | **-全部18章-** |
+| **合计** | **99** | **-全部 18 章-** |
 
 ---
 

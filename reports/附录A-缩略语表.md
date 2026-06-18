@@ -69,7 +69,7 @@
 | **SLA** | Service Level Agreement | 服务等级协议 |
 | **SLSA** | Supply-chain Levels for Software Artifacts | 软件制品供应链安全级别 |
 | **SMB** | Small and Medium Business | 中小企业 |
-| **SOC 2** | System and Organization Controls 2 | 系统与组织控制报告（第2类） |
+| **SOC 2** | System and Organization Controls 2 | 系统与组织控制报告（第 2 类） |
 | **SOX** | Sarbanes-Oxley Act (USA) | 萨班斯-奥克斯利法案 |
 | **SRE** | Site Reliability Engineering | 站点可靠性工程 |
 | **SSG** | Static Site Generator | 静态站点生成器 |

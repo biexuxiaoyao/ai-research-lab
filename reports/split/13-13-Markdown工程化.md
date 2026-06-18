@@ -67,7 +67,7 @@ CLI + AI (Claude Code) ──→ VS Code + Marksman ──→ Typora 预览
 - [Markdown 工程化工具全景](../../references/markdown-engineering-tools.md) — 10 个维度的详细工具调研
 - [第 01 章：需求工程](../../topics/01-需求工程/README.md) — Markdown Spec 文档是 SDD（规范驱动开发）的核心载体，需求规格的 Markdown 化是 AI Agent 可消费需求的前提
 - [第 09 章：角色重塑与治理](../../topics/09-角色重塑与治理/README.md) — `CLAUDE.md` / `AGENTS.md` 作为 Agent 护栏，Markdown 指令文件是治理框架的基础设施载体
-- [第 14 章：Agent Harness 与运行时](../../topics/14-Agent-Harness与运行时/README.md) — CLAUDE.md 是 Harness 层的核心配置格式：指令文件通过 Harness 的 Hooks 和权限系统被强制执行，Markdown 从"文档"变身为"可执行治理代码"
+- [第 14 章：Agent Harness 与运行时](../../topics/14-Agent-Harness 与运行时/README.md) — CLAUDE.md 是 Harness 层的核心配置格式：指令文件通过 Harness 的 Hooks 和权限系统被强制执行，Markdown 从"文档"变身为"可执行治理代码"
 - [第 18 章：提示工程与上下文工程](../../topics/18-提示工程与上下文工程/README.md) — AGENTS.md/CLAUDE.md 是指令文件生态的核心：Markdown 格式的指令文件如何被组织、分层、继承和自动化维护
 
 ## 待深入方向
@@ -82,7 +82,7 @@ CLI + AI (Claude Code) ──→ VS Code + Marksman ──→ Typora 预览
 | **标准化程度** | 非标准（各工具自行解析） | CommonMark/GFM 标准，所有解析器支持 | 完全非标准，仅少数工具支持 |
 | **AI 消费** | 需启发式解析（`[[` 标记），跨工具歧义大 | 最优 — 标准 Markdown 链接，AI 模型训练数据中大量存在 | 最差 — 训练数据中几乎不存在 |
 | **LSP 支持** | Marksman 原生支持（Go to Def / Find References / Rename） | VS Code 内置 + Marksman 均支持 | 仅 Zeta Note 自身支持 |
-| **链接目标** | 笔记名/页面名（可含 `#heading` 锚点） | 相对/绝对文件路径（可含 `#heading` 锚点） | `<note名>@##heading` 双段语法 |
+| **链接目标** | 笔记名/页面名（可含 `#heading` 锚点） | 相对/绝对文件路径（可含 `#heading` 锚点） | `<note 名>@##heading` 双段语法 |
 | **Rename 行为** | 重命名文件 → 链接自动更新（Marksman/memex-md/md-kit） | 重命名文件 → 链接断裂（需手动更新或依赖 IDE 重构） | 重命名 note → 所有引用自动更新 |
 | **跨工具互操作** | 弱 — Obsidian、Logseq、Foam 各有细微语法差异 | 强 — 任何 Markdown 渲染器/解析器均支持 | 极弱 — Zeta Note 独占 |
 | **人类可读性** | 高 — `[[概念名]]` 比 `[概念名](./path/to/concept.md)` 更简洁 | 中 — 冗长路径降低纯文本可读性 | 中 — `[:note@##id]` 对非 Zeta Note 用户不可读 |
@@ -180,7 +180,7 @@ CLI + AI (Claude Code) ──→ VS Code + Marksman ──→ Typora 预览
 
 ### 5. 个人/团队/企业三级 Markdown 工具栈的参考架构
 
-| 维度 | 个人研究者 | 团队（5-50人） | 企业（50+人） |
+| 维度 | 个人研究者 | 团队（5-50 人） | 企业（50+人） |
 |------|-----------|---------------|-------------|
 | **编辑器** | VS Code + Marksman LSP | VS Code + Marksman LSP + Vale 文风检查 | 托管 IDE（Codespaces）+ 统一 LSP 配置 |
 | **Lint** | markdownlint-cli2 (本地) | markdownlint-cli2 + remark-lint (CI) | 上述 + 企业级 Vale Server（术语/品牌一致性） |

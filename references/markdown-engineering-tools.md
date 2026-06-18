@@ -45,13 +45,13 @@
 
 ### 1.3 关键区别
 
-```
+```text
 tree-sitter → 通用 AST（多语言，IDE/LSP 用）
 remark      → mdast 专有 AST（Markdown 的"编译 IR"）
              ↓
           remark 更适合做 Markdown→Markdown 变换（如重构、格式化）
           tree-sitter 更适合做跨语言的结构化搜索
-```
+```text
 
 ---
 
@@ -107,7 +107,7 @@ steps:
   - uses: errata-ai/vale-action@v3
     with:
       files: topics/ reports/
-```
+```text
 
 ---
 
@@ -119,8 +119,8 @@ steps:
 
 | 工具 | 语言 | 检查范围 | 亮点 |
 |------|------|----------|------|
-| **[lychee](https://github.com/lycheeverse/lychee)** ⭐ | Rust | 外部URL + 本地路径 + 锚点 | 速度最快，官方 GitHub Action，生态最成熟 |
-| **[Linkspector](https://github.com/UmbrellaDocs/linkspector)** | TS | 外部URL + JS渲染页面 | Puppeteer 渲染 SPA 页面，**误报率极低** |
+| **[lychee](https://github.com/lycheeverse/lychee)** ⭐ | Rust | 外部 URL + 本地路径 + 锚点 | 速度最快，官方 GitHub Action，生态最成熟 |
+| **[Linkspector](https://github.com/UmbrellaDocs/linkspector)** | TS | 外部 URL + JS 渲染页面 | Puppeteer 渲染 SPA 页面，**误报率极低** |
 | **[Zenzic](https://github.com/PythonWoods/zenzic)** | Python | 链接 + 锚点 + 孤立文件 + 安全 | **安全扫描**—检测泄露的 API Key、路径遍历攻击 |
 | **[md-kit](https://www.npmjs.com/package/@safetnsr/md-kit)** | TS | `[[wikilinks]]` + 相对路径 | **自动修复**—`md-kit fix` 修正断链，`md-kit mv` 移动文件并更新所有引用 |
 
@@ -128,11 +128,11 @@ steps:
 
 | | lychee | Linkspector | Zenzic | md-kit |
 |------|:---:|:---:|:---:|:---:|
-| 外部链接 | ✅ | ✅ (JS页面友好) | ✅ | ❌ |
+| 外部链接 | ✅ | ✅ (JS 页面友好) | ✅ | ❌ |
 | 本地文件 | ✅ | ✅ | ✅ | ✅ |
 | 锚点/Hash | ✅ | ❌ | ✅ | ❌ |
 | Wiki-link | ❌ | ❌ | ❌ | ✅ (含自动修复) |
-| 安全检测 | ❌ | ❌ | ✅ (API Key泄露) | ❌ |
+| 安全检测 | ❌ | ❌ | ✅ (API Key 泄露) | ❌ |
 | CI 集成 | GitHub Action | GitHub Action + Reviewdog | `uvx` / `pip` | CLI exit code |
 
 ---
@@ -159,17 +159,17 @@ steps:
 
 ### 5.3 对本项目的意义
 
-```
+```text
 RESEARCH-OUTLINE.md 中的节点编号（如 1.1.1）
     ↓ 被交叉引用
 topics/01-需求工程/README.md  ← 定义节点
-topics/04-后端与API/README.md  ← "如 1.1.1 节所述"
+topics/04-后端与 API/README.md  ← "如 1.1.1 节所述"
 reports/10-交叉洞察.md        ← "SDD 三层模型揭示了..."
     ↓ 使用 wiki-link 语法
 [[01-需求工程#1.1.1 SDD 三层成熟度模型]]
     ↓ 配合 Marksman LSP
 Ctrl+Click 跳转 / Find All References / Rename 自动更新
-```
+```text
 
 ---
 
@@ -198,7 +198,7 @@ rule:
 rule:
   pattern: '$BEFORE 1.1.1 $AFTER'
   language: markdown
-```
+```text
 
 ---
 
@@ -217,14 +217,14 @@ rule:
 
 ### 7.2 对本项目的意义
 
-```
+```text
 场景：两个 Agent 同时编辑同一个 README.md
   Agent A：修改 ## 1.1 SDD → 新增 ### 1.1.4 节
   Agent B：修改 ## 1.2 指令文件 → 更新数据
 
 传统 git merge → 行级冲突，人手动解决
 aura-merge      → 感知 ## 结构，自动合并互不重叠的修改
-```
+```text
 
 ---
 
@@ -237,7 +237,7 @@ aura-merge      → 感知 ## 结构，自动合并互不重叠的修改
 | **[mdBook](https://github.com/rust-lang/mdBook)** | Rust | 极快（单二进制） | 技术书籍、简洁文档、无 JS 输出 |
 | **[Docusaurus](https://docusaurus.io/)** | React/Node | 中等 | 开发者文档、版本管理、MDX 交互 |
 | **[MkDocs](https://www.mkdocs.org/) + Material** | Python | 快 | Python 项目、最小配置即美观 |
-| **[Rspress](https://rspress.dev/)** | Rust/Rspack | 极快（1.8s/500页） | 大型文档站 |
+| **[Rspress](https://rspress.dev/)** | Rust/Rspack | 极快（1.8s/500 页） | 大型文档站 |
 | **[VitePress](https://vitepress.dev/)** | Vue | 快 | Vue 生态项目 |
 
 ### 8.2 本项目的推荐
@@ -279,7 +279,7 @@ jobs:
       - uses: errata-ai/vale-action@v3
         with:
           files: topics/ reports/
-```
+```text
 
 ### 9.2 可选的第四层
 
@@ -288,7 +288,7 @@ jobs:
       - run: npx @safetnsr/md-kit check
       # 或
       - run: npx markscribe find-broken-links
-```
+```text
 
 ---
 
@@ -344,7 +344,7 @@ npx markmap-cli RESEARCH-OUTLINE.md -o map.html
 
 # 5. 健康检查
 python assemble.py status
-```
+```text
 
 ---
 

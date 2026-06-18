@@ -82,7 +82,7 @@ arXiv 2604.16323（Casserini et al., 2026, CHI Workshop）提出 Agentic Entropy
 
 ### 第二层：推理溯源（Reasoning Provenance）
 
-arXiv 2603.21692（2026年3月）提出了 AER（Agent Execution Record）标准：每一步记录三个一等公民字段——`intent`（意图）、`observation`（观察）、`inference`（推理）。核心结论：推理过程不能事后还原，必须是 Agent 执行时的一等公民结构化数据。
+arXiv 2603.21692（2026 年 3 月）提出了 AER（Agent Execution Record）标准：每一步记录三个一等公民字段——`intent`（意图）、`observation`（观察）、`inference`（推理）。核心结论：推理过程不能事后还原，必须是 Agent 执行时的一等公民结构化数据。
 
 **工程含义**：
 - 调试方式转变：不再读代码理解逻辑，而是读 trace 理解 Agent 的决策
@@ -98,10 +98,10 @@ arXiv 2603.21692（2026年3月）提出了 AER（Agent Execution Record）标准
 ```text
 L1 — 任务门禁（Task Gate）
   没有 task.md → 禁止 Edit/Write
-  
+
 L2 — 设计门禁（Design Gate）
   新建模块/引入依赖/改数据模型 → 必须先更新 DESIGN.md
-  
+
 L3 — 审查门禁（Review Gate）
   PR 提交前 → 自动检查是否缺少 DESIGN.md 更新
 ```text
@@ -162,7 +162,7 @@ AI Agent 工程学的四个支柱：
 ## 交叉引用
 
 - [18.3 指令文件工程](./183-指令文件工程.md) — CLAUDE.md/AGENTS.md 的比较与治理实践
-- [14.3 权限模型与沙盒](../14-Agent-Harness与运行时/143-权限模型与沙盒.md) — Hooks 作为结构性门禁的执行层
+- [14.3 权限模型与沙盒](../14-Agent-Harness 与运行时/143-权限模型与沙盒.md) — Hooks 作为结构性门禁的执行层
 - [12.5 速度 vs 质量悖论](../12-横切主题/README.md) — 速度暴增背景下的质量保障问题
 - [09 角色重塑与治理](../09-角色重塑与治理/README.md) — 意图与判断力的稀缺性经济学
 
@@ -170,8 +170,8 @@ AI Agent 工程学的四个支柱：
 
 ## 📎 被以下章节引用
 
-- [18.6 DESIGN.md与意图工程](../09-角色重塑与治理/README.md)
+- [18.6 DESIGN.md 与意图工程](../09-角色重塑与治理/README.md)
 - [12.5 速度 vs 质量悖论](../12-横切主题/README.md)
-- [14.3 权限模型与沙盒](../14-Agent-Harness与运行时/143-权限模型与沙盒.md)
-- [18.6 DESIGN.md与意图工程](183-指令文件工程.md)
-- [18.6 DESIGN.md与意图工程](README.md)
+- [14.3 权限模型与沙盒](../14-Agent-Harness 与运行时/143-权限模型与沙盒.md)
+- [18.6 DESIGN.md 与意图工程](183-指令文件工程.md)
+- [18.6 DESIGN.md 与意图工程](README.md)

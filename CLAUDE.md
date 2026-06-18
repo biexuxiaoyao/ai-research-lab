@@ -12,7 +12,7 @@
 
 ## 文件架构（分层存储 + 动态装配）
 
-```
+```text
 ai-research-lab/
 ├── CLAUDE.md                    # 本文件
 ├── RESEARCH-OUTLINE.md          # 研究大纲（Agent 状态地图，Markmap 兼容）
@@ -28,13 +28,13 @@ ai-research-lab/
 │   │   └── README.md
 │   ├── 03-前端开发/
 │   │   └── README.md
-│   ├── 04-后端与API/
+│   ├── 04-后端与 API/
 │   │   └── README.md
 │   ├── 05-数据库与数据层/
 │   │   └── README.md
-│   ├── 06-测试与QA/
+│   ├── 06-测试与 QA/
 │   │   └── README.md
-│   ├── 07-CICD与DevOps/
+│   ├── 07-CICD 与 DevOps/
 │   │   └── README.md
 │   ├── 08-生产运维/
 │   │   └── README.md
@@ -42,7 +42,7 @@ ai-research-lab/
 │   │   └── README.md
 │   ├── 10-安全工程/
 │   ├── 11-法律合规与知识产权/
-│   └── 13-Markdown工程化/
+│   └── 13-Markdown 工程化/
 │       └── README.md
 ├── reports/                     # 总纲零部件（跨主题内容 + 附录）
 │   ├── 00-引言.md
@@ -56,7 +56,7 @@ ai-research-lab/
 ├── references/                  # 参考文献、论文、数据来源
 │   └── markdown-engineering-tools.md  # Markdown 工程化工具全景
 └── notes/                       # 研究笔记、临时观察、待验证假设 + 外部评估
-```
+```text
 
 **分层规则**：L1=目录，L2=超 1000 行时拆出独立文件，L3=文件内 `##` 章节，L4=文件内 `###` 子章节。
 
@@ -69,7 +69,7 @@ python assemble.py topic 01            # 装配指定主题
 python assemble.py depth 3             # 按深度装配（L3 标准分析）
 python assemble.py path 1.1.1          # 装配具体节点
 python assemble.py full <output.md>    # 生成完整研究报告
-```
+```text
 
 ## 研究方法论
 
@@ -85,7 +85,7 @@ python assemble.py full <output.md>    # 生成完整研究报告
 - **Agent 决策**：主 Agent 每次启动时读取大纲文件，基于覆盖状态自主决策下探方向和深度
 - **可视化**：大纲为 Markmap 兼容格式，运行 `npx markmap-cli RESEARCH-OUTLINE.md -o research-map.html` 生成交互式思维导图
 - **装配**：需要输出完整报告时，运行 `python assemble.py full reports/完整研究报告.md`
-- **工具链参考**：[`references/markdown-engineering-tools.md`](./references/markdown-engineering-tools.md) — Markdown 工程化工具全景（AST/LSP/Lint/链接检查/知识图谱/结构化搜索/语义Diff/SSG/MCP）
+- **工具链参考**：[`references/markdown-engineering-tools.md`](./references/markdown-engineering-tools.md) — Markdown 工程化工具全景（AST/LSP/Lint/链接检查/知识图谱/结构化搜索/语义 Diff/SSG/MCP）
 
 ## 自动扩展机制
 
@@ -107,32 +107,32 @@ python assemble.py full <output.md>    # 生成完整研究报告
 | 方向 | 文件数 | 状态 |
 |------|--------|------|
 | 01-需求工程 | 1 | L3 覆盖，+经济效益+工具选型 L2 |
-| 02-原型设计 | 1 | L3 覆盖，+经济效益+工具选型+Design-to-Code准确率+竞争动态 |
+| 02-原型设计 | 1 | L3 覆盖，+经济效益+工具选型+Design-to-Code 准确率+竞争动态 |
 | 03-前端开发 | 1 | L3 覆盖，+经济效益 L2 |
-| 04-后端与API | 1 | L3 覆盖，+经济效益+安全风险 L2 |
+| 04-后端与 API | 1 | L3 覆盖，+经济效益+安全风险 L2 |
 | 05-数据库 | 1 | L3 覆盖，+安全风险 L2 |
-| 06-测试与QA | 1 | L3 覆盖，+经济效益 L2 |
+| 06-测试与 QA | 1 | L3 覆盖，+经济效益 L2 |
 | 07-CICD | 1 | L3 覆盖，+安全风险 L2 |
 | 08-生产运维 | 1 | L3 覆盖，+安全风险 L2 |
-| 09-治理安全 | 1 | L3 覆盖，+Intent Engineer角色+Harness治理反模式 |
-| 10-安全工程 | 1 | ✅ L3 覆盖（76行，5 L2 × 15 L3） |
-| 11-法律合规 | 1 | ✅ L3 覆盖（287行，4 L2 × 12 L3） |
-| 12-横切主题 | 1 | ✅ L3 覆盖（375行，7 L2 × 17 L3，+Meta-Governance阶段5+AGENTS.md生态全景） |
-| 13-Markdown工程化 | 1 | ✅ L3 覆盖（9 L2，含 wiki-link 取舍 + SemShift + DOA + 工具栈参考架构） |
-| 14-Agent-Harness | 10 | ✅ L3 覆盖（已拆分 9 L2 子文件 + 索引，含指令文件加载机制 + Meta-Harness自动化治理） |
-| 15-模型选型 | 6 | ✅ L3 覆盖（已拆分 5 L2 子文件 + 索引，+DeepSeek适配层分析+模型路由案例） |
-| 16-多Agent系统 | 6 | ✅ L3 覆盖（已拆分 5 L2 子文件 + 索引，16 L3 全完成） |
+| 09-治理安全 | 1 | L3 覆盖，+Intent Engineer 角色+Harness 治理反模式 |
+| 10-安全工程 | 1 | ✅ L3 覆盖（76 行，5 L2 × 15 L3） |
+| 11-法律合规 | 1 | ✅ L3 覆盖（287 行，4 L2 × 12 L3） |
+| 12-横切主题 | 1 | ✅ L3 覆盖（375 行，7 L2 × 17 L3，+Meta-Governance 阶段 5+AGENTS.md 生态全景） |
+| 13-Markdown 工程化 | 1 | ✅ L3 覆盖（9 L2，含 wiki-link 取舍 + SemShift + DOA + 工具栈参考架构） |
+| 14-Agent-Harness | 10 | ✅ L3 覆盖（已拆分 9 L2 子文件 + 索引，含指令文件加载机制 + Meta-Harness 自动化治理） |
+| 15-模型选型 | 6 | ✅ L3 覆盖（已拆分 5 L2 子文件 + 索引，+DeepSeek 适配层分析+模型路由案例） |
+| 16-多 Agent 系统 | 6 | ✅ L3 覆盖（已拆分 5 L2 子文件 + 索引，16 L3 全完成） |
 | 17-可观测性 | 6 | ✅ L3 覆盖（已拆分 5 L2 子文件 + 索引，15 L3 全完成） |
-| 18-提示工程 | 7 | ✅ L3 覆盖（已拆分 6 L2 子文件 + 索引，含DESIGN.md与意图工程） |
+| 18-提示工程 | 7 | ✅ L3 覆盖（已拆分 6 L2 子文件 + 索引，含 DESIGN.md 与意图工程） |
 
 ### 报告附录（2026-06-18 体系化完成）
 
 | 编号 | 附录 | 文件 | 内容 |
 |------|------|------|------|
-| A | 缩略语表 | `reports/附录A-缩略语表.md` | 🆕 74 条英文缩写全称与中文译名 |
-| B | 图表索引 | `reports/附录B-图表索引.md` | 🆕 37 张 Mermaid 图表索引 + 类型分布 |
-| C | 待验证数据清单 | `reports/附录C-待验证数据清单.md` | 🆕 28 个待验证数据点 + 验证优先级 |
-| D | 参考文献交叉索引 | `reports/附录D-参考文献章节交叉索引.md` | 🆕 99 条文献 × 18 章双向追溯矩阵 |
+| A | 缩略语表 | `reports/附录 A-缩略语表.md` | 🆕 74 条英文缩写全称与中文译名 |
+| B | 图表索引 | `reports/附录 B-图表索引.md` | 🆕 37 张 Mermaid 图表索引 + 类型分布 |
+| C | 待验证数据清单 | `reports/附录 C-待验证数据清单.md` | 🆕 28 个待验证数据点 + 验证优先级 |
+| D | 参考文献交叉索引 | `reports/附录 D-参考文献章节交叉索引.md` | 🆕 99 条文献 × 18 章双向追溯矩阵 |
 | E | 术语表 | `reports/12-术语表.md` | 55 条核心概念定义（A-Z 全覆盖，30→55） |
 | F | 研究方法 | `reports/13-研究方法.md` | 研究设计、三层递归法、数据收集、方法学局限 |
 | G | 实践检查清单 | `reports/14-实践检查清单.md` | SDD/测试/CI/CD/安全/可观测性 + 综合转型路线图 |
@@ -145,7 +145,7 @@ python assemble.py full <output.md>    # 生成完整研究报告
 
 | 文件 | 内容 |
 |------|------|
-| `notes/外部评估-AI驱动软件工程范式变革研究报告.md` | 七维度综合评审 |
+| `notes/外部评估-AI 驱动软件工程范式变革研究报告.md` | 七维度综合评审 |
 | `notes/外部评估-具体改进建议.md` | 28 条可操作改进建议 |
 | `notes/外部评估-推荐引用工具指南.md` | 文献管理→校验→检测→写作工具链 |
 | `notes/外部评估-自动化引用校验工具使用指南.md` | 四种校验工具操作手册 |

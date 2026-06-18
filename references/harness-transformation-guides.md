@@ -16,7 +16,7 @@
 |:---:|------|---------|
 | 1 | 项目评估与现状梳理 | 盘点项目结构、构建命令、现有规范 |
 | 2 | 创建目录结构 | `.claude/{rules,hooks,skills,agents,commands,memory}/` |
-| 3 | 编写 CLAUDE.md | ~80行项目索引：技术栈、构建命令、架构约束 |
+| 3 | 编写 CLAUDE.md | ~80 行项目索引：技术栈、构建命令、架构约束 |
 | 4 | 配置 settings.json + Hooks | 权限配置 + PreToolUse/PostToolUse/SessionStart/Stop 四类 Hook |
 | 5 | 创建路径作用域规则 | `.claude/rules/` 下按模块（controller/service/repository/components/hooks/api/styles/testing/state）拆分规则，通过 `paths:` frontmatter 精确匹配 |
 | 6 | 创建 DESIGN.md | 架构决策记录（ADR 格式）：选择、拒绝的方案、权衡、约束 |
@@ -91,6 +91,6 @@
 
 ## 交叉引用
 
-- [14.8 指令文件加载机制](../topics/14-Agent-Harness与运行时/148-指令文件加载机制.md) — Harness 拦截层与路径规则触发机制
-- [14.9 Meta-Harness自动化治理](../topics/14-Agent-Harness与运行时/149-Meta-Harness自动化治理.md) — Harness 本身的自动化维护
+- [14.8 指令文件加载机制](../topics/14-Agent-Harness 与运行时/148-指令文件加载机制.md) — Harness 拦截层与路径规则触发机制
+- [14.9 Meta-Harness 自动化治理](../topics/14-Agent-Harness 与运行时/149-Meta-Harness 自动化治理.md) — Harness 本身的自动化维护
 - [18.3 指令文件工程](../topics/18-提示工程与上下文工程/183-指令文件工程.md) — CLAUDE.md 的设计哲学与治理最佳实践

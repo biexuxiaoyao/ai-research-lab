@@ -53,14 +53,14 @@
 
 ## 🔬 研究方法论
 
-```
+```text
 每个研究方向执行三层递归深挖
   ├── 第 1 层：现状与工具生态 — 关键数据、主流产品、企业实践
   ├── 第 2 层：深层机制 — 底层原理、因果链、结构性矛盾
   └── 第 3 层：未来影响 — 趋势预测、反直觉洞察、应对策略
 
 多源交叉验证：学术论文 × 行业报告 × 一线实践 × 产品数据
-```
+```text
 
 ---
 
@@ -79,13 +79,13 @@ python assemble.py publish            # 一键生成所有格式
 
 # 可视化
 npx markmap-cli RESEARCH-OUTLINE.md -o research-map.html
-```
+```text
 
 ---
 
 ## 📁 文件架构
 
-```
+```text
 ai-research-lab/
 ├── README.md                   # 项目入口
 ├── RESEARCH-OUTLINE.md         # 研究大纲（Agent 状态地图）
@@ -107,7 +107,7 @@ ai-research-lab/
 │   ├── book.toml
 │   └── src/
 └── notes/                      # 研究笔记
-```
+```text
 
 ---
 

@@ -12,7 +12,7 @@
 
 ## 项目结构
 
-```
+```text
 ai-research-lab/
 ├── CLAUDE.md                        # 项目配置（Agent 自举指令）
 ├── RESEARCH-OUTLINE.md              # 研究大纲（Markmap 兼容的思维导图源文件）
@@ -24,28 +24,28 @@ ai-research-lab/
 │   ├── 00-引言.md
 │   ├── 10-交叉洞察.md
 │   └── 11-结论与参考文献.md
-├── topics/                          # 各研究方向（L1=目录，L2=超500行自动拆分）
+├── topics/                          # 各研究方向（L1=目录，L2=超 500 行自动拆分）
 │   ├── 01-需求工程/README.md
 │   ├── 02-原型设计/README.md
 │   ├── 03-前端开发/README.md
-│   ├── 04-后端与API/README.md
+│   ├── 04-后端与 API/README.md
 │   ├── 05-数据库与数据层/README.md
-│   ├── 06-测试与QA/README.md
-│   ├── 07-CICD与DevOps/README.md
+│   ├── 06-测试与 QA/README.md
+│   ├── 07-CICD 与 DevOps/README.md
 │   ├── 08-生产运维/README.md
 │   ├── 09-角色重塑与治理/README.md
-│   └── 10-Markdown工程化/README.md
+│   └── 10-Markdown 工程化/README.md
 ├── references/
-│   ├── markdown-engineering-tools.md  # 工具生态全景（10维度调研）
+│   ├── markdown-engineering-tools.md  # 工具生态全景（10 维度调研）
 │   └── markdown-pipeline-prompt.md    # 本文件
 └── notes/
-```
+```text
 
 ## 管线架构
 
 ### 三层质量门禁
 
-```
+```text
 ./check.sh
     ├── 第 1 层：markdownlint-cli2       结构规范检查
     │   （标题层级、空行、列表格式、代码块语言标签）
@@ -55,7 +55,7 @@ ai-research-lab/
     │
     └── 第 3 层：assemble.py full        装配完整性验证
         （全量文档能否成功拼装为完整报告）
-```
+```text
 
 当前状态：**15 个文件，0 errors，31 个内部链接全有效，装配产出 1186 行。**
 
@@ -70,7 +70,7 @@ python assemble.py depth 3             # 按深度装配（L3 = 标准分析）
 python assemble.py path 1.1.1          # 按大纲路径装配
 python assemble.py full output.md      # 全量装配为完整报告
 python assemble.py suggest-splits      # 识别超 500 行文件，建议拆分
-```
+```text
 
 核心逻辑：
 - 读取 `RESEARCH-OUTLINE.md` 解析 341 个节点的知识树
@@ -119,13 +119,13 @@ python assemble.py suggest-splits      # 识别超 500 行文件，建议拆分
 
 ## 个人工作流
 
-```
+```text
 Claude Code (CLI+AI)  →  生产/消费引擎
 VS Code + Marksman    →  编辑 + LSP 导航（Ctrl+Shift+O / F12 / Shift+F12）
 Typora                →  WYSIWYG 预览校验
 Pandoc                →  多格式编译（PDF/HTML/DOCX）
 check.sh              →  提交前质量门禁
-```
+```text
 
 ## 供分析的问题
 
