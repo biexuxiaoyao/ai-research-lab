@@ -1,3 +1,9 @@
+---
+title: "探索：SLG GUI Agent 的可行性与技术路线"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # 探索：SLG GUI Agent 的可行性与技术路线
 
 > 时间：2026-06-13

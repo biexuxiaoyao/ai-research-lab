@@ -1,3 +1,9 @@
+---
+title: "Markdown 工程化工具全景 — 2026"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # Markdown 工程化工具全景 — 2026
 
 > **背景**：AI 的爆发使得 Markdown 从"轻量标记语言"升级为"AI Agent 的核心交互格式"。`CLAUDE.md`、`AGENTS.md`、Spec 文档、知识库——全部是 Markdown。这要求我们以**工程思维**对待 Markdown：它需要 AST 解析、Lint 检查、链接验证、重构同步、CI 集成——就像代码一样。

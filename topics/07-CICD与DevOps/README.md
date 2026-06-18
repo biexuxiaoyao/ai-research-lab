@@ -1,3 +1,9 @@
+---
+title: "CI/CD与DevOps的AI化"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 ## 第七章：CI/CD 与 DevOps 的 AI 化
 
 > **📌 TL;DR — 本章核心发现** · ⏱ 5 分钟（全章深读）

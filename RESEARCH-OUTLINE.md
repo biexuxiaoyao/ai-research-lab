@@ -1,3 +1,9 @@
+---
+title: "研究知识体系 — 广度 × 深度大纲（Agent 可读）"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # 研究知识体系 — 广度 × 深度大纲（Agent 可读）
 
 > **用途**：主 Agent 的研究地图。用于追踪当前研究状态、决策下探方向、评估广度覆盖。
@@ -656,7 +662,7 @@
   - 13.4.2.1 Vale — Go 单二进制，术语/语气/拼写/自定义词汇 ✅ [L2]
   - 13.4.2.2 markdownlint + Vale 双卡策略 ✅ [L2]
 - 13.4.3 链接验证 ✅ [L3]
-  - 13.4.3.1 lychee (Rust) — 外部URL + 本地路径 + 锚点，GitHub Action 生态最成熟 ✅ [L3]
+  - 13.4.3.1 lychee (Rust) — 外部 URL + 本地路径 + 锚点，GitHub Action 生态最成熟 ✅ [L3]
   - 13.4.3.2 Linkspector — Puppeteer 渲染 SPA 页面，误报率极低 ✅ [L2]
   - 13.4.3.3 Zenzic — 安全扫描（API Key 泄露 + 路径遍历） ✅ [L2]
   - 13.4.3.4 md-kit — `[[wiki-link]]` 自动修复 ✅ [L2]
@@ -769,7 +775,7 @@
 - 14.6.2 Agent 间通信协议（消息传递 / 共享状态 / 黑板模式） ✅ [L3]
 - 14.6.3 工作流定义语言（Workflow-as-Code / YAML / Script） ✅ [L3]
 
-### 14.7 Harness可观测性 ✅ [L3]
+### 14.7 Harness 可观测性 ✅ [L3]
 
 - 14.7.1 Agent 行为的 Trace / Log / Metrics 三支柱 ✅ [L3]
 - 14.7.2 Token 消耗的实时追踪与成本归因 ✅ [L3]
@@ -783,18 +789,18 @@
 - 14.8.2 Read 事件驱动的路径规则触发机制 ✅ [L3]
 - 14.8.3 System Prompt vs 对话历史：两种注入位置 ✅ [L3]
 - 14.8.4 "新建文件陷阱"：Write/Edit 不触发路径匹配 ✅ [L3]
-- 14.8.5 `paths:` CSV 字符串格式陷阱（YAML数组静默失效） ✅ [L3]
+- 14.8.5 `paths:` CSV 字符串格式陷阱（YAML 数组静默失效） ✅ [L3]
 - 14.8.6 路径作用域三种实现思路的对比 ✅ [L3]
 
 ### 14.9 Meta-Harness 自动化治理 ✅ [L3] ⚠️ 社区新兴概念
 
 > "让 AI 管理管理 AI 的规则"——Harness 工程本身的自动化。
 
-- 14.9.1 Meta-Harness 的核心命题与已有基础设施（/init、claudenv等） ✅ [L3]
+- 14.9.1 Meta-Harness 的核心命题与已有基础设施（/init、claudenv 等） ✅ [L3]
 - 14.9.2 三阶段自动化：Init → Audit → Retrospective ✅ [L3]
-- 14.9.3 自治理陷阱（Self-Governance Trap）与 done-gate.js 6 个bug案例 ✅ [L3]
+- 14.9.3 自治理陷阱（Self-Governance Trap）与 done-gate.js 6 个 bug 案例 ✅ [L3]
 - 14.9.4 成熟度评估模型（🟢成熟 → 🟡可行 → 🟠实验 → 🔴危险） ✅ [L3]
-- 14.9.5 黄金法则：AI负责发现+起草+统计，人负责决策+担责 ✅ [L3]
+- 14.9.5 黄金法则：AI 负责发现+起草+统计，人负责决策+担责 ✅ [L3]
 
 ---
 
@@ -945,11 +951,11 @@
 
 > 从"怎么写"到"为什么这样写"——AI 代码的思考路径重建。
 
-- 18.6.1 问题本质：AI代码只承载结果，不承载思考路径 ✅ [L3]
+- 18.6.1 问题本质：AI 代码只承载结果，不承载思考路径 ✅ [L3]
 - 18.6.2 "Vibe Architecting"与隐性架构决策的五种机制 ✅ [L3]
 - 18.6.3 Agentic Entropy（智能体熵增）的三种失败模式 ✅ [L3]
 - 18.6.4 四层思考路径重建：Intent-Before-Code → Reasoning Provenance → Structural Gates → DESIGN.md ✅ [L3]
-- 18.6.5 2026年范式收敛：Plan Mode 在三大工具中的实现 ✅ [L3]
+- 18.6.5 2026 年范式收敛：Plan Mode 在三大工具中的实现 ✅ [L3]
 - 18.6.6 核心命题：意图、决策理由、权衡记录成为新的稀缺品 ✅ [L3]
 
 ---

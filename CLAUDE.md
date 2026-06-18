@@ -1,3 +1,9 @@
+---
+title: "AI Research Lab — AI 驱动软件工程范式变革研究"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # AI Research Lab — AI 驱动软件工程范式变革研究
 
 > 本项目专注于 **AI 对软件工程全链路范式变革** 的深度研究、跟踪与分析。

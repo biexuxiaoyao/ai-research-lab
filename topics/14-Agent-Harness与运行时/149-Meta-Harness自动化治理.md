@@ -1,3 +1,9 @@
+---
+title: "Agent-Harness与运行时（子章节）"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 ## 14.9 Meta-Harness：AI 管理 AI 的规则
 
 > ⚠️ **方法限定**：Meta-Harness 是 2026 年社区新兴概念，非正式学科。所述工具为社区维护的 npm 包，成熟度各异。done-gate.js 案例为单一个人实验，普适性待验证。

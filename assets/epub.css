@@ -1,0 +1,232 @@
+/* ============================================
+   ePub 电子书样式表
+   目标：专业学术电子出版物
+   ============================================ */
+
+/* ---- 基础排版 ---- */
+body {
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", Georgia, serif;
+  font-size: 1em;
+  line-height: 1.8;
+  color: #1a1a1a;
+  text-align: justify;
+  max-width: 40em;
+  margin: 0 auto;
+  padding: 0 1em;
+  orphans: 2;
+  widows: 2;
+}
+
+/* ---- 标题体系 ---- */
+h1 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 1.8em;
+  font-weight: 700;
+  margin: 2em 0 0.8em;
+  page-break-before: always;
+  page-break-after: avoid;
+  color: #111;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 1.5em 0 0.5em;
+  page-break-after: avoid;
+  color: #1e40af;
+}
+
+h3 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 1.15em;
+  font-weight: 600;
+  margin: 1.2em 0 0.4em;
+  page-break-after: avoid;
+  color: #333;
+}
+
+h4 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 1.05em;
+  font-weight: 600;
+  margin: 1em 0 0.3em;
+  color: #555;
+}
+
+/* ---- 段落 ---- */
+p {
+  margin: 0.5em 0;
+  text-indent: 2em;
+}
+
+p:first-of-type,
+blockquote p,
+li p,
+table p,
+figcaption p {
+  text-indent: 0;
+}
+
+/* ---- 链接 ---- */
+a {
+  color: #2563eb;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+/* ---- 引用块 ---- */
+blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1.2em;
+  border-left: 3px solid #2563eb;
+  background: #f8fafc;
+  font-style: italic;
+  color: #374151;
+}
+
+blockquote p {
+  margin: 0.3em 0;
+}
+
+/* ---- 代码 ---- */
+code {
+  font-family: "JetBrains Mono", "Source Code Pro", "Cascadia Code", monospace;
+  font-size: 0.9em;
+  background: #f1f5f9;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  color: #1e40af;
+}
+
+pre {
+  font-family: "JetBrains Mono", "Source Code Pro", "Cascadia Code", monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ---- 表格 ---- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.9em;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: #2563eb;
+  color: white;
+}
+
+th {
+  padding: 0.5em 0.7em;
+  text-align: left;
+  font-weight: 600;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+}
+
+td {
+  padding: 0.4em 0.7em;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+/* ---- 图表 ---- */
+figure {
+  margin: 1.5em 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figcaption {
+  font-size: 0.9em;
+  color: #6b7280;
+  margin-top: 0.5em;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+}
+
+/* ---- 列表 ---- */
+ul, ol {
+  margin: 0.5em 0;
+  padding-left: 1.8em;
+}
+
+li {
+  margin: 0.2em 0;
+}
+
+/* ---- 横向分隔线 ---- */
+hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 2em 0;
+}
+
+/* ---- 强调标记 ---- */
+strong {
+  font-weight: 700;
+  color: #111;
+}
+
+em {
+  font-style: italic;
+}
+
+mark {
+  background: #fef08a;
+  padding: 0.1em 0.2em;
+}
+
+/* ---- 脚注 ---- */
+.footnotes {
+  font-size: 0.85em;
+  color: #6b7280;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+/* ---- 目录 ---- */
+#TOC {
+  page-break-before: always;
+}
+
+#TOC ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#TOC a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+#TOC a::after {
+  content: leader('.') target-counter(attr(href), page);
+}
+
+/* ---- ePub 特定 ---- */
+@page {
+  margin: 2cm;
+}

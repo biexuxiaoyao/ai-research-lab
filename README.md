@@ -1,3 +1,9 @@
+---
+title: "AI Research Lab — AI 驱动软件工程范式变革研究"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # AI Research Lab — AI 驱动软件工程范式变革研究
 
 [![Research Status](https://img.shields.io/badge/research-18/18%20L1%20complete-brightgreen)](RESEARCH-OUTLINE.md)

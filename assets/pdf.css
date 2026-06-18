@@ -1,0 +1,243 @@
+/* ============================================
+   PDF 打印样式表（Pandoc + WeasyPrint）
+   目标：A4 页面，学术出版级排版
+   ============================================ */
+
+/* ---- 页面设置 ---- */
+@page {
+  size: A4;
+  margin: 2.5cm 2cm 2.5cm 2cm;
+
+  @top-center {
+    content: string(doctitle);
+    font-size: 0.8em;
+    color: #9ca3af;
+    font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  }
+
+  @bottom-center {
+    content: counter(page);
+    font-size: 0.8em;
+    color: #9ca3af;
+  }
+}
+
+@page :first {
+  @top-center {
+    content: none;
+  }
+  @bottom-center {
+    content: none;
+  }
+}
+
+/* ---- 封面页 ---- */
+.cover-page {
+  page-break-after: always;
+  text-align: center;
+  padding-top: 30%;
+}
+
+.cover-page h1 {
+  font-size: 2.2em;
+  border: none;
+  page-break-before: avoid;
+}
+
+.cover-page .subtitle {
+  font-size: 1.1em;
+  color: #6b7280;
+  margin-top: 1em;
+}
+
+/* ---- 基础排版 ---- */
+body {
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", Georgia, serif;
+  font-size: 10.5pt;
+  line-height: 1.8;
+  color: #1a1a1a;
+  text-align: justify;
+  widows: 3;
+  orphans: 3;
+  string-set: doctitle content();
+}
+
+/* ---- 标题体系 ---- */
+h1 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 18pt;
+  font-weight: 700;
+  margin: 2cm 0 0.8cm;
+  page-break-before: always;
+  page-break-after: avoid;
+  color: #111;
+  border-bottom: 1.5pt solid #2563eb;
+  padding-bottom: 0.4cm;
+}
+
+h2 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 14pt;
+  font-weight: 600;
+  margin: 1.5cm 0 0.5cm;
+  page-break-after: avoid;
+  color: #1e40af;
+}
+
+h3 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 1cm 0 0.4cm;
+  page-break-after: avoid;
+  color: #333;
+}
+
+h4 {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 11pt;
+  font-weight: 600;
+  margin: 0.8cm 0 0.3cm;
+  color: #555;
+}
+
+/* ---- 段落 ---- */
+p {
+  margin: 0.4em 0;
+  text-indent: 2em;
+}
+
+p:first-of-type,
+blockquote p,
+li p,
+table p {
+  text-indent: 0;
+}
+
+/* ---- 引用块 ---- */
+blockquote {
+  margin: 0.8em 0;
+  padding: 0.4em 1em;
+  border-left: 2pt solid #2563eb;
+  background: #f8fafc;
+  color: #374151;
+}
+
+/* ---- 代码 ---- */
+code {
+  font-family: "JetBrains Mono", "Source Code Pro", monospace;
+  font-size: 9pt;
+  background: #f1f5f9;
+  padding: 0.1em 0.3em;
+  color: #1e40af;
+}
+
+pre {
+  font-family: "JetBrains Mono", "Source Code Pro", monospace;
+  font-size: 8.5pt;
+  line-height: 1.5;
+  background: #f8fafc;
+  border: 0.5pt solid #e5e7eb;
+  padding: 0.7em;
+  page-break-inside: avoid;
+  white-space: pre-wrap;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ---- 表格 ---- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8em 0;
+  font-size: 9pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: #1e293b;
+  color: white;
+}
+
+th {
+  padding: 0.4em 0.6em;
+  text-align: left;
+  font-weight: 600;
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+}
+
+td {
+  padding: 0.3em 0.6em;
+  border-bottom: 0.5pt solid #d1d5db;
+}
+
+tr:nth-child(even) td {
+  background: #f9fafb;
+}
+
+/* ---- 图表 ---- */
+figure {
+  margin: 1em 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figcaption {
+  font-size: 8.5pt;
+  color: #6b7280;
+  margin-top: 0.4em;
+}
+
+/* ---- 列表 ---- */
+ul, ol {
+  margin: 0.4em 0;
+  padding-left: 1.5em;
+}
+
+li {
+  margin: 0.15em 0;
+}
+
+/* ---- 横向分隔线 ---- */
+hr {
+  border: none;
+  border-top: 0.5pt solid #d1d5db;
+  margin: 1.5em 0;
+}
+
+/* ---- 目录 ---- */
+#TOC {
+  page-break-before: always;
+  font-size: 10pt;
+}
+
+#TOC ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#TOC li {
+  margin: 0.3em 0;
+}
+
+#TOC a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+#TOC a::after {
+  content: leader('.') target-counter(attr(href), page);
+}
+
+/* ---- 脚注 ---- */
+.footnotes {
+  font-size: 8.5pt;
+  color: #6b7280;
+  border-top: 0.5pt solid #d1d5db;
+  margin-top: 1.5em;
+  padding-top: 0.8em;
+}

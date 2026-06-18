@@ -1,3 +1,9 @@
+---
+title: "Agent-Harness与运行时（子章节）"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 ## 14.7 Harness 的可观测性
 
 > Agent 行为可观测性在 2025-2026 年从"事后看 Token 消耗列表"快速演进为正式的 Trace/Log/Metrics 三支柱体系。

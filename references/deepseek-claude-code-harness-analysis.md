@@ -1,3 +1,9 @@
+---
+title: "DeepSeek V4 Pro × Claude Code：Harness 差异分析与适配优化"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 # DeepSeek V4 Pro × Claude Code：Harness 差异分析与适配优化
 
 > ⚠️ **方法限定**：本文档为社区参考分析，非学术研究。P0-P6 问题的来源为 GitHub Issues 和社区讨论，部分问题基于 N=19 小样本复现（P2 的 "11%" 95% CI: 1.4%-33.1%）。附录实测验证状态表标注了 3/10 误判和 4/10 不可验证项。使用前请自行验证关键功能。

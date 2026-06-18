@@ -1,3 +1,9 @@
+---
+title: "Agent-Harness与运行时"
+date: "2026-06-18"
+lang: zh-CN
+---
+
 ## 第十四章：Agent Harness 与运行时基础设施
 
 > **📌 TL;DR — 本章核心发现** · ⏱ 25 分钟（全章深读）
