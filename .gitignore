@@ -21,3 +21,6 @@ desktop.ini
 
 # Node (for markmap)
 node_modules/
+
+# 外部材料（不纳入版本管理）
+notes/
