@@ -21,6 +21,15 @@
 | 设计师 | v0 Design Mode、Onlook | 可视化设计→代码 |
 | DevOps 平台 | Replit Agent | 全栈自主开发 + 部署 |
 
+```mermaid
+pie title 前端 AI 工具五类用户分布（2026 Q2 估计）
+    "非技术用户 (Bolt.new/v0)" : 20
+    "初级开发者 (Cursor/Windsurf)" : 35
+    "高级前端工程师 (Claude Code/Cursor Agent)" : 25
+    "设计师 (v0 Design Mode)" : 10
+    "DevOps 平台 (Replit Agent)" : 10
+```
+
 #### 3.1.2 关键能力矩阵
 
 | 能力 | 成熟度 | 代表工具 |

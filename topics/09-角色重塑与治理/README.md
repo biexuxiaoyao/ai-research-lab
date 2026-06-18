@@ -26,6 +26,28 @@ Andrej Karpathy 的两个标志性时刻：
 | **引导式 Vibe Coding** | 粗看输出，微调迭代 | 高层审查 | 内部工具、Dashboard、MVP |
 | **Agentic Engineering** | 定义架构/Spec，编排 Agent，做质量裁决 | 系统性审查 | **生产级代码库、关键业务系统** |
 
+```mermaid
+timeline
+    title Vibe Coding → Agentic Engineering 演化谱系
+    section 2022-2024<br/>前 Vibe 时代
+      第一代 Tab 自动补全 : GitHub Copilot 行级补全<br/>人主导编码，AI 为助手
+                         : 代码完全由人类审查
+    section 2025<br/>Vibe Coding 兴起
+      第二代同步 Agent : Karpathy 提出 "Vibe Coding"（2025.2）<br/>Cursor Composer / Windsurf Cascade
+                       : 用自然语言 Prompt 生成代码<br/>不深度审查，不行就重新 Prompt
+                       : 适用：一次性原型 / Hackathon / 个人脚本
+    section 2025-2026<br/>过渡期
+      引导式 Vibe Coding : 粗看 AI 输出，微调迭代<br/>高层审查，非逐行审查
+                         : 适用：内部工具 / Dashboard / MVP
+    section 2026<br/>Agentic Engineering
+      第三代云端 Agent : Karpathy 宣告 Vibe Coding 终结（2026.2）<br/>Claude Code / Devin / Codex CLI
+                       : 99% 时间编排 Agent<br/>1% 时间做质量裁决
+                       : 定义架构+Spec，系统性审查<br/>适用：生产级代码库 / 关键业务系统
+    section 2026+<br/>未来
+      自主 Agent 协作 : 多 Agent 自主编排<br/>人类退出日常回路
+                      : 人类仅保留架构决策权和伦理裁决权
+```
+
 #### 9.1.2 三大治理框架
 
 | 框架 | 出品方 | 核心主张 |

@@ -29,6 +29,38 @@
 | Stripe 每周合并 1,000+ AI PR | Stripe |
 | Spotify 合并 1,500+ Agent PR | Spotify |
 
+```mermaid
+sequenceDiagram
+    participant Dev as 🧑‍💻 开发者
+    participant Agent as 🤖 AI Agent
+    participant Git as 📦 Git 仓库
+    participant CI as 🔄 CI 流水线
+    participant AIReview as 🔍 AI Code Review
+    participant Human as 👤 人类 Reviewer
+    participant CD as 🚀 CD 部署
+
+    Dev->>Agent: Spec + 任务指令
+    Agent->>Agent: 生成代码 + 自测
+    Agent->>Git: 提交 PR
+    Git->>CI: 触发流水线
+    CI->>CI: 构建 + Lint + SAST + 测试
+    alt CI 失败
+        CI-->>Agent: 反馈失败原因
+        Agent->>Git: 自动修复 + 更新 PR
+    end
+    CI->>AIReview: 代码审查请求
+    AIReview->>AIReview: 40+ Linter + 安全扫描
+    AIReview-->>Git: AI Review 报告
+    Git->>Human: PR 待人工审查
+    alt AI 生成代码(需红线审查)
+        Human->>Human: 安全/架构/DB Schema 审查
+    else 简单 PR(AI 可自主)
+        Human->>Git: 快速确认 + Approve
+    end
+    Human->>Git: Approve / Request Changes
+    Git->>CD: 合并 → 部署
+```
+
 #### 7.1.3 CI 中的 AI 安全扫描
 
 Semgrep + AI 和 CodeQL + AI 已成为 CI 流水线的标配组件。2026 Q1 的 56 个 AI 代码来源 CVE（超过 2025 全年）加速了这一趋势。

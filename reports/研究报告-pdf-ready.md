@@ -57,6 +57,25 @@ Cursor 在其 2026 年官方博客中明确划分了 AI 编码的三个时代：
 | **第二代：同步 Agent** | 2024–2025 | IDE 内的 Prompt-Response 循环，多文件编辑 | Cursor Composer、Windsurf Cascade |
 | **第三代：云端 Agent** | 2025–2026 | 自主 Agent 在云端 VM 运行数小时，并行执行，人审阅产物 | Claude Code、Devin、Codex CLI、Cursor Cloud Agent |
 
+```mermaid
+timeline
+    title AI 编码三次范式迁移 — 关键里程碑
+    section 第一代<br/>Tab 自动补全
+      2022.6 : GitHub Copilot GA 发布<br/>行级代码补全
+      2023 : Copilot Chat 引入<br/>对话式代码辅助
+      2024.1 : Copilot 企业版<br/>代码引用过滤器
+    section 第二代<br/>同步 Agent
+      2024.3 : Cursor Composer Beta<br/>多文件编辑 Agent
+      2024.11 : Windsurf Cascade<br/>实时 Agent 协作
+      2024.12 : GitHub Copilot Free<br/>降低入门门槛
+    section 第三代<br/>云端 Agent
+      2025.3 : Claude Code 发布<br/>终端自主 Agent
+      2025.5 : Devin GA<br/>全自主开发 Agent
+      2025.11 : GitHub Octoverse<br/>180M+ 开发者
+      2026.2 : Vibe Coding → Agentic Engineering<br/>Karpathy 宣告范式转变
+      2026.6 : Cursor Cloud Agent<br/>云端并行 Agent 舰队
+```
+
 三个时代对应三种人机关系：**助手 → 协作者 → 编排者**。
 
 ### 0.2 核心假设的瓦解

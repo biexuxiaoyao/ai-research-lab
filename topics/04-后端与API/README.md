@@ -46,6 +46,29 @@ flowchart LR
     style After fill:#e8f5e9
 ```mermaid
 
+```mermaid
+sequenceDiagram
+    participant Human as 👨‍💼 API 设计师
+    participant Spec as 📋 OpenAPI Spec
+    participant Agent as 🤖 AI Agent
+    participant Code as 💻 实现代码
+    participant Test as 🧪 自动化测试
+    participant Gate as 🛡️ Contract 校验门禁
+
+    Human->>Spec: 定义 API Contract<br/>(端点/幂等性/错误语义)
+    Spec->>Agent: Contract 作为约束输入
+    Agent->>Code: 生成实现代码
+    Agent->>Test: 生成 Contract 测试
+    Test->>Gate: 校验实现是否符合 Contract
+    alt Contract 校验通过
+        Gate-->>Human: ✅ 批准合并
+    else Contract 校验失败
+        Gate-->>Agent: ❌ 不一致：错误码不符合 Spec
+        Agent->>Code: 修正实现
+    end
+    Note over Human,Gate: API Contract = 真相源<br/>代码 = 衍生品
+```
+
 1. **从实现到约束**：工作从"写代码实现功能"变为"定义约束确保正确性"。哪些数据验证规则不可违反？哪些并发语义必须保证？Agent 无法从训练数据中推断这些。
 
 2. **从编码到语义设计**：API 的幂等性、一致性模型、错误语义、版本化策略——这些是业务领域知识的外化，无法从任何训练数据自动推导。

@@ -23,6 +23,53 @@ AI 让安全从"被动防御"升级为"主动设计约束"。56 个 AI 来源 CV
 
 > 来源：CSA Research Notes (2026)、Veracode 2025 GenAI Code Security Report、CodeRabbit State of AI vs Human Code Generation、arXiv 2510.26103、CAICT AI Safety Benchmark
 
+```mermaid
+block-beta
+    columns 5
+    block:DEFENSE:5
+        columns 1
+        d["🛡️ AI 安全四层防御体系"]
+    end
+    space:5
+    block:LAYER1:1
+        columns 1
+        l1["第1层：输入过滤"]
+        l1a["• Prompt 清洗与脱敏"]
+        l1b["• 间接注入检测"]
+        l1c["• 上下文来源验证"]
+    end
+    block:LAYER2:1
+        columns 1
+        l2["第2层：权限最小化"]
+        l2a["• Agent 沙盒隔离"]
+        l2b["• 工具/API 白名单"]
+        l2c["• OWASP Top 10 for Agentic AI"]
+    end
+    block:LAYER3:1
+        columns 1
+        l3["第3层：输出验证"]
+        l3a["• SAST/SCA 自动扫描"]
+        l3b["• 许可证污染检测"]
+        l3c["• AI-BOM / 代码溯源"]
+    end
+    block:LAYER4:1
+        columns 1
+        l4["第4层：人类审批"]
+        l4a["• 安全红线人工裁决"]
+        l4b["• 异常行为审计"]
+        l4c["• 不可变审计日志"]
+    end
+    block:THREATS:1
+        columns 1
+        t["⚠️ 威胁向量"]
+        ta["Prompt Injection<br/>SKILLJECT 95.1%"]
+        tb["Slopsquatting<br/>237+ 真实仓库"]
+        tc["AI 来源 CVE<br/>2026 Q1 56+"]
+    end
+    LAYER1 --> LAYER2 --> LAYER3 --> LAYER4
+    THREATS --> LAYER1
+```
+
 ---
 
 ## 10.2 Prompt Injection与上下文劫持

@@ -8,6 +8,54 @@
 
 现代多Agent架构可沿**集中化-去中心化**光谱排列。Sandeep Nutakki在《The American Journal of Engineering and Technology》（2026年2月）发表的系统综述中，对企业场景下四种拓扑进行了正式评估，发现多Agent协作相比单Agent基线在复杂任务上**任务完成率提升34%**，但伴随**12-18%的协调开销**[1]。
 
+```mermaid
+block-beta
+    columns 4
+    block:HIERARCHY:1
+        columns 1
+        h["🏗️ 层级式 (Hierarchical)"]:1
+        hl["集中度 ~80%"]:1
+        hc["通信 O(n)"]:1
+        hf["容错性 中等"]:1
+        hs["代表: MetaGPT"]:1
+    end
+    block:PEER:1
+        columns 1
+        p["🌐 对等式 (P2P/Swarm)"]:1
+        pl["集中度 0%"]:1
+        pc["通信 全连接 O(n²)"]:1
+        pf["容错性 最高"]:1
+        ps["代表: LangGraph Swarm"]:1
+    end
+    block:BLACKBOARD:1
+        columns 1
+        b["📝 黑板式 (Blackboard)"]:1
+        bl["集中度 ~50%"]:1
+        bc["通信 仅读/写黑板"]:1
+        bf["容错性 中高"]:1
+        bs["代表: 专家系统"]:1
+    end
+    block:MARKET:1
+        columns 1
+        m["💰 市场式 (Auction)"]:1
+        ml["集中度 动态"]:1
+        mc["通信 投标/合同"]:1
+        mf["容错性 高"]:1
+        ms["代表: AutoGen"]:1
+    end
+    HIERARCHY --> PEER
+    PEER --> BLACKBOARD
+    BLACKBOARD --> MARKET
+```
+
+| 维度 | 层级式 | 对等式 | 黑板式 | 市场式 |
+|------|--------|--------|--------|--------|
+| **通信复杂度** | O(n)，每层仅与直系通信 | 全连接 O(n²)；Swarm模式 O(k) | 仅读/写黑板 | 投标/合同机制 |
+| **集中化程度** | ~80% | 0% | ~50% | 动态 |
+| **容错性** | 中等（分支故障局部化） | 极高（无单点故障） | 中高 | 高 |
+| **适用场景** | 结构化流水线、多步骤协作 | 广度覆盖、探索性任务 | 专家协同、增量问题求解 | 资源分配、任务竞标 |
+| **主要风险** | 顶层Orchestrator单点故障 | 无限路由循环 | 黑板瓶颈 | 竞标开销 |
+
 ### 层级式（Hierarchical / Tree）
 
 ```text

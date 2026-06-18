@@ -15,6 +15,22 @@
 
 **第一圈层：AI 代码生成器（Prompt → 代码）**
 
+```mermaid
+quadrantChart
+    title 设计工具三圈层矩阵（AI 自主性 × 专业设计能力）
+    x-axis "面向非设计师 / 快速原型" --> "面向专业设计师 / 生产级"
+    y-axis "AI 辅助（人在回路中）" --> "AI 自主（Agent 驱动）"
+    quadrant-1 "Agent 原生设计引擎（概念阶段）"
+    quadrant-2 "AI 原生设计编辑器（Figma AI / Penpot）"
+    quadrant-3 "AI 代码生成器（v0 / Bolt.new / Lovable）"
+    quadrant-4 "传统设计工具（纯手工设计）"
+    "第一圈层：AI 代码生成器<br/>v0 / Bolt.new / Lovable": [0.3, 0.3]
+    "第二圈层：AI 原生编辑器<br/>Figma AI / Penpot": [0.65, 0.45]
+    "第三圈层：Agent 原生引擎<br/>概念 / 实验阶段": [0.7, 0.82]
+    "传统专业设计工具<br/>Figma（基础）/ Sketch": [0.6, 0.1]
+    "Vibe 设计工具<br/>Canva / Wix": [0.15, 0.15]
+```
+
 | 工具 | 开发方 | 定位 | 关键数据 |
 |------|--------|------|----------|
 | **v0** | Vercel | React/Tailwind UI 生成 | 复合模型架构（RAG + LLM + AutoFix） |

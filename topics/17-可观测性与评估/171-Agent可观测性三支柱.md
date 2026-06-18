@@ -8,6 +8,38 @@
 
 Agent决策链路涉及LLM调用、工具调用（Tool Call）、检索增强（RAG）、守卫决策（Guardrails）等多层嵌套执行。端到端追踪需将每次模型调用、每个工具执行、每个检索步骤包装为分布式Trace中的Span，通过`trace_id`串联全链路。
 
+```mermaid
+flowchart TB
+    subgraph PILLARS["🔍 Agent 可观测性三支柱全景"]
+        direction LR
+        subgraph TRACE["📍 Trace — 链路追踪"]
+            T1["🔗 端到端 Span 链<br/>LLM Call → Tool Call → RAG → Guardrail"]
+            T2["🆔 trace_id 串联全链路"]
+            T3["📊 OpenInference/OTel 语义约定"]
+            T4["⏱️ 延迟归因到每个 Span"]
+        end
+        subgraph LOG["📝 Log — 结构化日志"]
+            L1["📋 五大类别 Schema<br/>决策/请求/响应/错误/性能"]
+            L2["🧠 reasoning 思考链记录"]
+            L3["⚠️ error.type 分类<br/>timeout/rate_limit/api_error"]
+            L4["🔍 全文检索 + 关联查询"]
+        end
+        subgraph METRICS["📈 Metrics — 量化指标"]
+            M1["✅ 成功率 / 延迟 P50 P95 P99"]
+            M2["💰 Token 消耗 + 成本归因"]
+            M3["🎯 LLM-as-Judge 质量评分"]
+            M4["🚨 告警：连续失败率 >10%"]
+        end
+    end
+    TRACE -->|"Span 关联"| LOG
+    LOG -->|"聚合统计"| METRICS
+    METRICS -.->|"异常触发"| TRACE
+    style PILLARS fill:#f0f4ff
+    style TRACE fill:#e3f2fd
+    style LOG fill:#fff3e0
+    style METRICS fill:#e8f5e9
+```
+
 ### 四家平台能力对比
 
 | 能力维度 | Langfuse | Braintrust | Arize Phoenix | Weights & Biases Weave |

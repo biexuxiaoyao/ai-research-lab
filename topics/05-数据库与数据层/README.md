@@ -21,6 +21,23 @@ Text-to-SQL 是 AI + 数据库最热门的赛道，但基准测试的"90% 准确
 
 **核心鸿沟**：基准假设干净的、文档完善的 Schema；生产环境的 Schema 经过多年演进，充满了模糊命名（`t1`, `flag`, `type`）、隐式约定和无文档的依赖。
 
+```mermaid
+flowchart LR
+    subgraph BENCH["🏆 学术基准环境"]
+        B1["🧹 干净 Schema<br/>规范命名"]
+        B2["📖 文档完善<br/>外键明确"]
+        B3["🎯 Spider 87%<br/>BIRD 72%"]
+    end
+    subgraph PROD["🏭 真实生产环境"]
+        P1["🤷 模糊命名<br/>t1, flag, type"]
+        P2["📝 隐式约定<br/>无文档依赖"]
+        P3["⬇️ 准确率<br/>远低于基准"]
+    end
+    BENCH -->|"⚠️ 巨大鸿沟<br/>Schema 复杂度 ×100<br/>业务语义缺失"| PROD
+    style BENCH fill:#e8f5e9
+    style PROD fill:#ffebee
+```
+
 #### 5.1.2 AI + 数据库工具生态
 
 | 环节 | 工具 | 能力 |
